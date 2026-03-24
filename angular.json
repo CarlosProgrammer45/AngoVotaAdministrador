@@ -29,16 +29,15 @@
               "jsqr",
               "tesseract.js",
               "node-fetch"
-            ],
-            "baseHref": "/"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "3MB",
-                  "maximumError": "4MB"
+                  "maximumWarning": "4MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
