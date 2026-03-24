@@ -312,7 +312,7 @@ export class SplashScreenComponent implements OnInit {
 @Component({
   selector: 'app-pagina-principal',
   standalone: true,
-  imports: [NgFor, NgIf, DecimalPipe, SplashScreenComponent],
+  imports: [NgFor, NgIf, DecimalPipe, SplashScreenComponent, RouterLink, RouterLinkActive],
   templateUrl: './pagina-principal.html',
   styleUrl: './pagina-principal.css'
 })
