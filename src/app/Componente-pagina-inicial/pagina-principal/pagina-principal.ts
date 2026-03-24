@@ -8,7 +8,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'app-splash-screen',
   standalone: true,
-  imports: [NgIf, DecimalPipe, RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, NgIf, DecimalPipe],
   template: `
     <div class="splash-container" [class.fade-out]="saindo">
 
