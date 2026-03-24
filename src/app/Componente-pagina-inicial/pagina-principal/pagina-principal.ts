@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnInit, Inject, PLATFORM_ID, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { isPlatformBrowser, NgFor, NgIf, DecimalPipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 // COMPONENTE SPLASH SCREEN - DECLARADO PRIMEIRO
