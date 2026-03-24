@@ -29,7 +29,8 @@
               "jsqr",
               "tesseract.js",
               "node-fetch"
-            ]
+            ],
+            "baseHref": "/"
           },
           "configurations": {
             "production": {
