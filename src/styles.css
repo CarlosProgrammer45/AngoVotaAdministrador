@@ -1,0 +1,54 @@
+/* Google Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+
+
+
+/* You can add global styles to this file, and also import other style files */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family:  "Public Sans, sans-serif";
+}
+
+body{
+
+  transition: 2s all ease-in-out; 
+  overflow-x: hidden;
+
+}
+
+/* largura da barra */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* fundo da barra */
+::-webkit-scrollbar-track {
+   background: #555;
+}
+
+/* parte que se move */
+::-webkit-scrollbar-thumb {
+  background: #2d06ba94;
+  border-radius: 2px;
+}
+
+/* hover na barra */
+::-webkit-scrollbar-thumb:hover {
+  background: #dcd3d3;
+}
+
+
+/* Container da aplicação */
+/* Container da aplicação */
+/* Container da aplicação */
+
+
+
+
+
+
+

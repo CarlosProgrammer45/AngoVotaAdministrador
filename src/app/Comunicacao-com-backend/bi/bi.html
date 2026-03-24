@@ -1,0 +1,64 @@
+<!--<h1>Nº do bilhete de identidade</h1>
+<input placeholder="Digite o nº do bilhete" [(ngModel)]="biNumber" />
+<button (click)="Clicar()">Clica aqui</button>-->
+
+
+<body style="background: linear-gradient(  1350deg, rgb(2, 7, 36), rgb(23, 34, 131)); font-family:'Times New Roman', Times, serif; ">
+<!--cabecario do Navegador-->
+   <header class=" fixed top-0 w-full z-50 backdrop-blur shadow-2xs shadow-blue-600">
+       <nav   class="bg-gray-800 text-lg text-gray-300 p-3">
+       <div   class="flex justify-between items-center">
+       
+       <h1    class=" font-bold ">Ango<strong 
+              class="text-blue-500 font-black font-mono">Voto</strong></h1>
+       <ul    class=" gap-6 transition-all-3s">
+       <button>Ajuda</button>
+       <!-- botao idioma-->
+       <select class=" float-right bg-gry-100 rounded-3xl" (change)="mudarIdioma($event)">
+ <option value="" class="bg-transparent">🌐</option>
+  <option value="ch"  class="text-black">Chokwe</option>
+  <option value="fr"  class="text-black">Francês</option>
+  <option value="en"  class="text-black">English</option>
+  <option value="ki"  class="text-black">Kikongo</option>
+  <option value="kim" class="text-black">Kimbundo</option>
+  <option value="kw"  class="text-black">Kwanyama</option>
+  <option value="ng"  class="text-black">Ngangela</option>
+  <option value="ld"  class="text-black">Lunda</option>
+  <option value="pt"  class="text-black">Português</option>
+  <option value="um"  class="text-black">Umbundo</option>
+       </select>
+       </ul>
+       </div>
+       </nav>
+   </header>
+
+<!--Area inputs do bi-->
+      <div     class="relative bg-transparent  justify-center text-center shadow-2xl overflow-hidden max-w-sm mx-auto mt-30 rounded-2xl p-10"> 
+      <form    class=" transition-transform duration-500 ease-in-out">
+      <div     class="mb-5">
+     </div>
+      <h2      class="mb-5 text-2xl text-cyan-50 font-bold"></h2>
+      <p       class="text-gray-400 -pr-3 mb-5"></p>
+      <input 
+              class="p-4 w-full pr-1 rounded-xl border border-blue-600 text-white mb-5 "
+              type="text"
+              name="numeroBI"
+             [(ngModel)]="numeroBI"
+             placeholder="Coloque o número do Bilhete aqui"
+             maxlength="14"
+             minlength="14"/>
+      <button 
+             class="bg-blue-800 rounded-xl p-4 w-full"
+             (click)="verificarBI()"></button>
+      <p     class="text-gray-500 -pr-3 mb-5"></p>
+      
+      </form>
+      
+     
+      </div>
+      
+      <p>{{ mensagem }}</p>
+      </body> 
+
+
+

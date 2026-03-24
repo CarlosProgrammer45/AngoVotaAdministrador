@@ -1,0 +1,332 @@
+/* =====================================================
+   SIDEBAR CNE — CSS COMPLETO (substitui o teu actual)
+   Mantém os mesmos nomes de classes do teu código
+   ===================================================== */
+
+/* Variáveis — mantidas do teu original */
+:host {
+  --primaria:          #0a49c9;
+  --fundo-muitoescuro: #111827;
+  --BCP-400: #94A3B8;
+  --BCP-500: #64748B;
+  --BCP-700: #334155;
+  --BCP-800: #1e293b;
+  --BCP-900: #0f172a;
+  --verdinha-400: #34d399;
+  --blue:    #3B82F6;
+  --blue-d:  #60A5FA;
+  --border:  rgba(59,130,246,0.12);
+}
+
+/* ── Sidebar container ── */
+.sidebar {
+  width: 230px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #0f1623;
+  border-right: 1px solid var(--border);
+  /* remove o transform que estava a cortar o menu */
+  transform: none;
+}
+
+/* ── BLOCO 1: Header ── */
+.box1CNE {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  /* reset margens negativas do original */
+  margin-left: 0;
+}
+
+.butoncne {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  background: linear-gradient(135deg, #3B82F6, #1d4ed8);
+  border: none;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(59,130,246,0.35);
+  transition: box-shadow 0.2s;
+  color: white;
+  padding: 0;
+  flex-shrink: 0;
+}
+.butoncne:hover { box-shadow: 0 0 20px rgba(59,130,246,0.55); }
+.butoncne svg { display: block; }
+
+.title {
+  font-size: 0.83rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f1f5f9;
+  /* reset margens negativas */
+  margin: 0;
+}
+.title-accent { color: var(--blue-d); }
+
+/* ── BLOCO 2: Perfil ── */
+.perfil {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.6rem 0.65rem;
+  padding: 0.6rem 0.7rem;
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 9px;
+  cursor: default;
+  flex-shrink: 0;
+  /* reset margens do original */
+  margin-bottom: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.user {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1d4ed8, #3B82F6);
+  border: 2px solid rgba(59,130,246,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  /* reset do original que usava background-image */
+  background-image: none;
+  margin-left: 0;
+  box-shadow: none;
+}
+
+.titleUser {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+.adm {
+  font-size: 0.79rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+.nivel {
+  font-size: 0.63rem;
+  color: var(--blue-d);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.user-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--verdinha-400);
+  box-shadow: 0 0 6px rgba(52,211,153,0.7);
+  flex-shrink: 0;
+}
+
+/* ── BLOCO 3 + 4: Nav listas ── */
+nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 0.55rem;
+}
+nav::-webkit-scrollbar { width: 2px; }
+nav::-webkit-scrollbar-thumb { background: var(--border); }
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-links li {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+/* ── nav-item — RESET TOTAL do CSS antigo ── */
+.nav-links li a.nav-item {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.52rem 0.65rem;
+  border-radius: 7px;
+  cursor: pointer;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+  position: relative;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-links li a.nav-item:hover {
+  background: rgba(59,130,246,0.07);
+  color: #f1f5f9;
+  border-color: var(--border);
+}
+
+.nav-links li a.nav-item.nav-item-active {
+  background: rgba(59,130,246,0.12);
+  color: #f1f5f9;
+  border-color: rgba(59,130,246,0.28);
+}
+
+.nav-links li a.nav-item.nav-item-active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 22%; bottom: 22%;
+  width: 2px;
+  background: var(--blue);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(59,130,246,0.4);
+}
+
+/* ── Icon box ── */
+.nav-icon {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  color: #64748b;
+  transition: all 0.15s;
+  /* reset do i { font-size:20px } do CSS antigo */
+}
+
+.nav-links li a.nav-item:hover .nav-icon {
+  background: rgba(59,130,246,0.1);
+  border-color: rgba(59,130,246,0.2);
+  color: var(--blue);
+}
+
+.nav-links li a.nav-item.nav-item-active .nav-icon {
+  background: rgba(59,130,246,0.16);
+  border-color: rgba(59,130,246,0.32);
+  color: #93C5FD;
+}
+
+/* Reset do i global do teu CSS antigo */
+.nav-icon i {
+  font-size: 0.68rem !important;
+  line-height: 1;
+  display: block;
+}
+
+/* box3 — texto dos links */
+.box3 {
+  color: inherit;
+  font-size: inherit;
+  margin-left: 0;
+  flex: 1;
+}
+
+/* Badge Live */
+.nav-badge {
+  margin-left: auto;
+  background: rgba(59,130,246,0.15);
+  color: var(--blue-d);
+  font-size: 0.56rem;
+  font-weight: 700;
+  padding: 0.08rem 0.35rem;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+}
+
+/* ── BLOCO 4: Segurança ── */
+.seguranca {
+  padding-top: 0;
+  margin-top: 0.3rem;
+  border-top: 1px solid rgba(59,130,246,0.1);
+}
+
+.titleseguranca {
+  font-size: 0.59rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2d3f58;
+  padding: 0.65rem 0.45rem 0.3rem;
+  margin: 0;
+}
+
+/* ── BLOCO 5: Sair ── */
+.sistema {
+  padding: 0.6rem 0.55rem;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  /* reset do border-top do CSS antigo */
+}
+
+.butonsistema {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.52rem 0.65rem;
+  background: rgba(239,68,68,0.07);
+  border: 1px solid rgba(239,68,68,0.18);
+  border-radius: 7px;
+  color: #f87171;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  /* reset margin-top:70px, margin-left:-90px do original */
+  margin: 0;
+}
+
+.butonsistema:hover {
+  background: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.32);
+  color: #fca5a5;
+  /* reset width:200px do original */
+  width: 100%;
+}
+
+.nav-icon-red {
+  background: rgba(239,68,68,0.1) !important;
+  border-color: rgba(239,68,68,0.2) !important;
+  color: #f87171 !important;
+}
+
+.butonsistema:hover .nav-icon-red {
+  color: #fca5a5 !important;
+}

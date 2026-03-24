@@ -1,0 +1,22 @@
+.invalido {
+    border: 2px solid red;
+  }
+  
+  .validado {
+    border: 2px solid green;
+  }
+  
+  .error {
+    color: red;
+    font-size: 0.9em;
+  }
+
+  button:disabled{
+    cursor: not-allowed;
+    
+  }
+
+  button{
+    cursor: pointer;
+  }
+  

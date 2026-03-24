@@ -1,0 +1,287 @@
+.fundo{
+    video {
+        border-radius: 1rem;
+        width: fit-content;
+        
+        object-fit: cover;
+        position: absolute;
+    }
+}
+.quadro{
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 2rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    width: 95.3%;
+    justify-content: center;
+    
+    
+    
+
+    .b{
+      
+        font-size: 12px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(230, 157, 109, 0.514);
+        font-weight: 600;
+        color: var(--color-primary);
+        border: 1px solid var(--color-primary);
+    }
+
+
+    .content-to-header1{
+        
+        justify-content: space-between;
+        max-width: 1300px;
+        margin-top: 50px;
+        margin-bottom: 90px;
+       
+
+}
+
+.content-to-header2{
+
+    display: flex;
+    justify-content: space-between;
+    
+    h1{
+        font-size: 4rem;
+        font-weight: bold;
+        width: 65%;
+        margin-bottom: 20px;
+    }
+    span{
+        color: var(--color-primary);
+        position: relative;
+        color: var(--color-primary);
+        display: inline-block;
+}
+
+/* SVG do traço */
+.underline {
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 10px;
+  opacity: 0.4;
+}
+    
+
+    p{
+        line-height: 1.8;
+        max-width: 500px;
+      
+    }
+
+}
+
+.nav-quadro{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding: 0.5rem;
+    width: 460px;
+    border-radius: 1000px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: 450px;
+    top: 90px;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+   
+    
+}
+ul{
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    display: flex;
+    li{
+        padding: 4px;
+        width: 80px;
+    }
+
+    .fundo-primeiro{
+     
+        background-color: var(--color-bg-dark);
+        
+        border-radius: 2000px;
+       
+        text-align: center;
+        a{
+            color: var(--color-bg-light);
+        }
+        
+        
+    }
+
+    
+    
+}
+
+a{
+
+    font-family: var(--font-display);
+    text-decoration: none;
+    color: var(--color-bg-dark);
+
+}
+
+}
+
+
+
+.hero-right {
+    position: relative;
+    height: 600px;
+    font-family: var(--font-sans);
+  }
+
+  
+  .map-wrapper {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    border-radius: 28px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    animation: flutuando 6s ease-in-out infinite;
+  }
+
+  @keyframes flutuando{
+    0% {transform: translateY(0);}
+    50% {transform: translateY(-8px);}
+    100% {transform: translateY(0);}
+
+  } 
+
+ 
+  
+  .map-header,
+  .map-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  
+  .map-body {
+    flex: 1;
+    background: linear-gradient(135deg, red, rgb(179, 179, 16), rgb(10, 9, 9));
+    border-radius: 20px;
+    margin: 12px 0;
+    overflow: hidden;
+  }
+  
+  .map-body img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    transform: scale(1.5);
+    
+
+  }
+
+ .map-body img:hover{
+    transition: 2s ease-in-out;
+    transform: scale(2);
+    backdrop-filter: blur(10px);
+   
+  }
+
+  .floating-card {
+    position: absolute;
+    width: 200px;
+    padding: 16px;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  }
+  
+  /* votos */
+  .floating-card.votes {
+    top: 40px;
+    left: -20px;
+    transform: rotate(-2deg);
+    animation: flutuandoCardCima 4.5s ease-in-out infinite;
+  }
+  @keyframes flutuandoCardCima{
+    0% {transform: translateY(0) rotate(-2deg);}
+    50% {transform: translateY(-12px) rotate(-2deg);}
+    100% {transform: translateY(0) rotate(-2deg);}
+  }
+  
+  /* segurança */
+  .floating-card.security {
+    bottom: 60px;
+    right: -20px;
+    transform: rotate(1.5deg);
+    animation: flutuandoCardBaixo 4.5s ease-in-out infinite;
+  }
+
+
+  @keyframes flutuandoCardBaixo{
+    0% {transform: translateY(0) rotate(1.5deg);}
+    50% {transform: translateY(10px) rotate(1.5deg);}
+    100% {transform: translateY(0) rotate(1.5deg);}
+  }
+  
+  
+  .floating-label {
+    position: absolute;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.6);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  
+  .floating-label.right {
+    top: 45%;
+    right: -30px;
+    transform: rotate(12deg);
+  }
+  
+  .floating-label.left {
+    bottom: 25%;
+    left: -30px;
+    transform: rotate(-6deg);
+  }
+
+
+
+  .map-point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #d4a017;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    z-index: 1000;
+  }
+  
+  .map-point::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1px solid #d4a017;
+    opacity: 0.5;
+    animation: ripple 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.4); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes ripple {
+    0%   { transform: scale(0.6); opacity: 0.6; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+  

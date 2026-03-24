@@ -1,0 +1,23 @@
+
+<!-- SEU GRID -->
+<div class="container">
+  <div class="grid">
+    <div *ngFor="let c of candidatos" class="card">
+     
+      <div class="name">{{ c.nome }}</div>
+       <div class="status">ATIVO</div>
+      
+      <div class="partido">{{ c.partido }}</div>
+      <p class="partido">{{ c.descricao }}</p>
+      <span class="partido">{{ c.slogan }}</span>
+        <div class="footer">
+        <div class="lock"><i class="fa-solid fa-shield-alt"></i></div>
+        <h4 class="io">CONTAGEM BLOQUEADA</h4>
+        <p>Aguardando liberação oficial do CNE</p>
+       </div>
+    </div>
+  </div>
+</div>
+
+ <div>{{ candidatos.length }}</div>
+

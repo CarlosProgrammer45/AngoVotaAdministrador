@@ -1,0 +1,110 @@
+<body>
+    <!-- HEADER -->   
+    <div class="header">
+      <div>
+        <h1>Gestão e Listagem de Eleitores</h1>
+        <p>Base de dados unificada nacional</p>
+      </div>
+      <div class="sync">SINCRONIZAÇÃO EM TEMPO REAL</div>
+    </div>
+  
+    <!-- DASHBOARD -->
+    <div class="dashboard-card">
+      <!-- TOTAL REGISTRADOS -->
+      <div class="item">
+        <div class="icon">
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <div>
+          <span class="label">TOTAL REGISTRADOS</span>
+          <h2>{{ eleitores.length}}</h2>
+        </div>
+      </div>
+  
+      <div class="divider"></div>
+  
+      <!-- TOTAL VOTOU -->
+      <div class="item">
+        <div>
+          <span class="label">TOTAL VOTOU</span>
+          <h2>{{ totalVotou }}</h2>
+        </div>
+        <div class="icon blue">
+          <i class="fa-solid fa-user"></i>
+        </div>
+      </div>
+  
+      <!-- PARTICIPAÇÃO -->
+      <div class="participation">
+        <div class="circle">
+          <span>{{ participacao }}%</span>
+        </div>
+        <p>PARTICIPAÇÃO</p>
+      </div>
+    </div>
+  
+    <!-- CARD PRINCIPAL -->
+    <div class="card">
+      <div class="controls">
+        <input [(ngModel)]="textoInput" (input)="filtrar()" placeholder="Buscar por Nome, BI ou Província...">
+        <select [(ngModel)]="provinciaSelecionada" (change)="filtrar()">
+            <option value="">Todas as Províncias</option>
+            <option value="Bengo">Bengo</option>
+            <option value="Benguela">Benguela</option>
+            <option value="Bié">Bié</option>
+            <option value="Cabinda">Cabinda</option>
+            <option value="Cuando Cubango">Cuando Cubango</option>
+            <option value="Cuanza Norte">Cuanza Norte</option>
+            <option value="Cuanza Sul">Cuanza Sul</option>
+            <option value="Cunene">Cunene</option>
+            <option value="Huambo">Huambo</option>
+            <option value="Huíla">Huíla</option>
+            <option value="Luanda">Luanda</option>
+            <option value="Lunda Norte">Lunda Norte</option>
+            <option value="Lunda Sul">Lunda Sul</option>
+            <option value="Malanje">Malanje</option>
+            <option value="Moxico">Moxico</option>
+            <option value="Namibe">Namibe</option>
+            <option value="Uíge">Uíge</option>
+            <option value="Zaire">Zaire</option>
+          </select>
+      </div>
+  
+      <!-- TABELA DINÂMICA -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ELEITOR / NOME COMPLETO</th>
+            <th>BI (IDENTIDADE)</th>
+            <th>PROVÍNCIA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of eleitoresPorProvincia">
+            <td class="user">
+              <div class="avatar">{{ pegarIniciais(e.bilhete.nome_completo) }}</div>
+              <div>
+                {{ e.bilhete.nome_completo }}<br>
+                <span class="small">Registrado em {{ e.data_registo }}</span>
+              </div>
+            </td>
+            <td>{{ e.bilhete.bi }}</td>
+            <td>{{ e.provincia }}</td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- FOOTER -->
+      <div class="footer">
+        <div>Mostrando {{ eleitores.length }} resultados</div>   
+        <div class="pagination">
+          <div class="page active">1</div>
+          <div class="page">2</div>
+          <div class="page">3</div>
+          <div class="page">...</div>
+          <div class="page">100</div>
+        </div>
+      </div>
+    </div>
+  </body>
+  

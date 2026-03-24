@@ -1,0 +1,16 @@
+<!-- consolidacao-nacional.component.html -->
+
+<div class="globe-container">
+  <div #globeContainer class="globe-view"></div>
+
+
+  <app-angola-globo
+    [selectedRegion]="selectedRegion"
+    [provinces]="angolaData.provinces"
+    [municipalities]="angolaData.municipalities"
+    [currentZoomLevel]="currentZoomLevel"
+    (regionSelected)="onRegionSelected($event)"
+    (zoomOutRequested)="onZoomOutRequested()">
+  </app-angola-globo>
+
+</div>

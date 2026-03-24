@@ -1,0 +1,75 @@
+<!-- angola-data.component.html -->
+
+
+<div class="data-panel" [class.expanded]="selectedRegion">
+  <div class="panel-header">
+    <div class="header-left">
+      <a class="back-link" routerLink="/relatorio">
+        <i class="fa-solid fa-arrow-left">←</i>
+      </a>
+      <h1>
+        <i class="fa-solid fa-earth-africa card-icon"></i>
+        Consolidação Nacional <strong>Ao vivo</strong>
+      </h1>
+    </div>
+
+    <button class="toggle-btn" (click)="showProvinceList = !showProvinceList">
+      {{ showProvinceList ? '▼' : '▶' }}
+    </button>
+  </div>
+
+  <!-- Lista de Províncias --> 
+  <div class="province-list" *ngIf="showProvinceList">
+    <h3>Províncias</h3>
+    <div class="list-items">
+      <div 
+        *ngFor="let province of provinces" 
+        class="list-item"
+        [class.active]="selectedRegion?.id === province.id"
+        (click)="selectProvince(province)">
+        <span class="item-name">{{ province.name }}</span>
+        <span class="item-capital">{{ province.capital }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detalhes da Região Selecionada -->
+  <div class="region-details" *ngIf="selectedRegion">
+    <h3>{{ selectedRegion.name }}</h3>
+    
+    <div class="detail-card">
+      <div class="detail-row">
+        <span class="detail-label">Capital:</span>
+        <span class="detail-value">{{ selectedRegion.capital || '—' }}</span>
+      </div>
+
+      <div class="detail-row" *ngIf="selectedRegion.population">
+        <span class="detail-label">População:</span>
+        <span class="detail-value">{{ selectedRegion.population | number }}</span>
+      </div>
+
+
+    <!-- Municípios da Província -->
+    <div class="municipality-section" *ngIf="currentZoomLevel === 'province'">
+      <h4>Municípios</h4>
+      <div class="municipality-list">
+        <div 
+          *ngFor="let municipality of getFilteredMunicipalities()" 
+          class="municipality-item"
+          (click)="selectMunicipality(municipality)">
+          {{ municipality.name }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão Voltar -->
+    <button class="back-btn" (click)="zoomOut()" *ngIf="currentZoomLevel !== 'world'">
+      ← Voltar
+    </button>
+  </div>
+
+  <!-- Info quando nada selecionado -->
+  <div class="info-message" *ngIf="!selectedRegion && currentZoomLevel === 'world'">
+    Clique em uma província no mapa para ver detalhes
+  </div>
+</div>

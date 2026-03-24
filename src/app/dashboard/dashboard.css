@@ -1,0 +1,67 @@
+/*
+<div class="dashboard">
+  <app-header></app-header>
+ <app-menu></app-menu>
+ <app-contador></app-contador>
+ <app-participacao-global></app-participacao-global>
+ <div class="influencia">
+ <app-provincia-influencia></app-provincia-influencia>
+</div>
+<app-localizacao></app-localizacao>
+<app-resumo-por-provincia></app-resumo-por-provincia>
+</div>*/
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  height: auto;
+  background: linear-gradient(135deg, #070a1b 0%, #081c36 100%);
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.juncao, .juncao2 {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.juncao > *, .juncao2 > * {
+  flex-shrink: 0;
+}
+
+.deslizar{
+    animation: deslizar 1s ease-in-out;
+}
+
+@keyframes deslizar{
+    from{
+        transform: translateX(-300px);
+        opacity: 0;
+    }
+
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+  .juncao, .juncao2 {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 5px;
+  }
+}

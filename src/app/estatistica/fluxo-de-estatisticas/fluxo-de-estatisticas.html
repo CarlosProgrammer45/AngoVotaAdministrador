@@ -1,0 +1,34 @@
+
+<body>
+<div class="card">
+
+  <div class="header">
+    <div class="title">
+      <h2> <i class="fa-solid fa-chart-line card-icon"></i>Fluxo de Votação por Hora</h2>
+      <span>Volume de votos processados em tempo real</span>
+    </div>
+
+    <div class="buttons">
+      <button class="btn active">Hoje</button>
+      <button class="btn">Ontem</button>
+    </div>
+  </div>
+
+  <div class="chart">
+
+    <apx-chart
+      [series]="ChartOptionsHora.series!"
+      [chart]="ChartOptionsHora.chart!"
+      [xaxis]="ChartOptionsHora.xaxis!"
+      [title]="ChartOptionsHora.title!"
+      [stroke]="ChartOptionsHora.stroke!"
+      [markers]="ChartOptionsHora.markers!">
+      
+    </apx-chart>
+
+  </div>
+
+</div>
+
+</body>
+

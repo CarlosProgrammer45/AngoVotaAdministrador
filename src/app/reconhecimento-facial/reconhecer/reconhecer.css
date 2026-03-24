@@ -1,0 +1,587 @@
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateX(-300px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes ringPulse {
+    0%   { box-shadow: 0 0 0 0    rgba(59,130,246,0.45), 0 0 50px rgba(0,0,0,0.7); }
+    60%  { box-shadow: 0 0 0 14px rgba(59,130,246,0),    0 0 50px rgba(0,0,0,0.7); }
+    100% { box-shadow: 0 0 0 0    rgba(59,130,246,0),    0 0 50px rgba(0,0,0,0.7); }
+}
+
+@keyframes scan {
+    0%   { stroke-dasharray: 4 10; }
+    50%  { stroke-dasharray: 10 4; }
+    100% { stroke-dasharray: 4 10; }
+}
+
+@keyframes pulse {
+    0%,100% { opacity: 0.5; }
+    50%     { opacity: 1; }
+}
+
+@keyframes direcaoEsquerda {
+    0%,100% { transform: translateX(0); }
+    50%     { transform: translateX(-8px); }
+}
+
+@keyframes direcaoDireita {
+    0%,100% { transform: translateX(0); }
+    50%     { transform: translateX(8px); }
+}
+
+/* ─── FACE GUIDE ─── */
+.face-outline { animation: scan 2s linear infinite; }
+
+.arrow {
+    fill: none;
+    stroke: #22c55e;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.left  { animation: direcaoEsquerda 2s infinite ease-in-out; }
+.right { animation: direcaoDireita  2s infinite ease-in-out; }
+
+.face-guide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    animation: pulse 2.5s infinite;
+}
+
+.face-guide ellipse,
+.face-guide path,
+.face-guide line {
+    fill: none;
+    stroke: rgba(96, 165, 250, 0.65);
+    stroke-width: 1.5;
+}
+
+.face-guide .arrow { stroke: #22c55e; fill: none; }
+
+/* ─── PRINCIPAL ─── */
+.principal {
+    background-color: #0d1b2e;
+    
+   overflow: hidden;
+    box-sizing: border-box;
+    
+    font-family: 'DM Sans', 'Segoe UI', sans-serif;
+    color: #ddeeff;
+}
+
+/* ─── HEADER ─── */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 40px;
+    width: 100%;
+    background-color: #101922;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.nav-logo-container { display: flex; align-items: center; gap: 0.6rem; }
+
+.nav-logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 6px rgba(59,130,246,0.5));
+}
+
+.nav-logo-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.logo-accent  { color: #60A5FA; font-weight: 800; span{-webkit-text-stroke: 2px #60A5FA; color: transparent; opacity: 0.5;}  }
+.logo-outline {
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.75);
+    color: transparent;
+    font-weight: 800;
+}
+
+.header-direita { display: flex; gap: 0.5rem; align-items: center; }
+
+.icon-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+.icon-btn:hover { background: rgba(59,130,246,0.18); border-color: rgba(99,160,255,0.20); }
+.icon-btn span  { color: rgba(255,255,255,0.75); font-size: 20px; }
+
+/* ─── LAYOUT ─── */
+.container {
+    margin-top: 60px;
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+
+/* ─── SIDEBAR ─── */
+.barraLateral {
+    width: 255px;
+    padding: 20px 14px;
+    background-color: #0f1e32;
+    height: calc(100vh - 60px);
+    position: fixed;
+    top: 60px;
+    left: 0;
+    border-right: 1px solid rgba(99, 160, 255, 0.10);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.barraLateral .progresso {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 16px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(99, 160, 255, 0.10);
+}
+
+.barraLateral .progresso .logoFoto .svg { width: 52px; height: 52px; }
+
+.barraLateral .progresso .content-content h3 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ddeeff;
+}
+
+.barraLateral .progresso .content-content p {
+    font-size: 0.75rem;
+    color: #6a90b8;
+    margin-top: 3px;
+}
+
+.barraLateral .ConfAuth {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    background-color: #132338;
+    border: 1px solid rgba(99, 160, 255, 0.10);
+    padding: 6px;
+    border-radius: 14px;
+    font-size: 13px;
+}
+
+.barraLateral .ConfAuth .Conf {
+    display: flex;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 7px;
+    align-items: center;
+    transition: background 0.18s;
+}
+.barraLateral .ConfAuth .Conf:hover { background: rgba(255,255,255,0.04); }
+.barraLateral .ConfAuth .Conf .corP  { color: #22c55e; font-weight: 500; }
+.barraLateral .ConfAuth .Conf .logoVerify { width: 20px; height: 20px; flex-shrink: 0; }
+.barraLateral .ConfAuth .Conf .logoVerify .logoSvg { width: 100%; height: 100%; }
+
+.barraLateral .ConfAuth .Confif {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 7px;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(59,130,246,0.22), rgba(59,130,246,0.08));
+    border: 1px solid rgba(59,130,246,0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+.barraLateral .ConfAuth .Confif::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: #3B82F6;
+    border-radius: 0 2px 2px 0;
+}
+
+.barraLateral .ConfAuth .Confif p {
+    color: #60A5FA;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.barraLateral .ConfAuth .Confif .logoVerify { width: 20px; height: 20px; flex-shrink: 0; }
+.barraLateral .ConfAuth .Confif .logoVerify .logoSvgFace { width: 100%; height: 100%; }
+
+.barraLateral .Confi {
+    background-color: rgba(59,130,246,0.06);
+    border: 1px solid rgba(59,130,246,0.13);
+    border-radius: 10px;
+    padding: 14px 12px;
+    font-size: 12.5px;
+    color: #6a90b8;
+    line-height: 1.55;
+}
+
+.barraLateral .Confi div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.barraLateral .Confi div h4 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #60A5FA;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.barraLateral .Confi .dica-icon { color: #60A5FA; font-size: 17px; }
+
+.barraLateral .Confi p {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    
+}
+
+/* ─── MAIN CONTENT ─── */
+.content-direira {
+    margin-left: 255px;
+    padding: 24px 28px;
+    width: calc(100% - 255px);
+    overflow-x: hidden;
+    animation: fadeUp 1s ease-in-out;
+    z-index: 1;
+    
+}
+
+.content-direira .fundo-webcam {
+    background-color: #132338;
+    border-radius: 20px;
+    padding: 32px 36px;
+    border: 1px solid rgba(99, 160, 255, 0.10);
+    box-shadow: 0 4px 48px rgba(0,0,0,0.5), 0 1px 0 rgba(99,160,255,0.05) inset;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+    max-width: 1020px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.content-direira .fundo-webcam::after {
+    content: '';
+    position: absolute;
+    top: -100px; right: -80px;
+    width: 340px; height: 340px;
+    background: radial-gradient(circle, rgba(59,130,246,0.07) 0%, transparent 65%);
+    pointer-events: none;
+}
+
+.content-direira .fundo-webcam .webcam-liveness-container {
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: #000;
+    overflow: hidden;
+    position: relative;
+    width: 300px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgba(59,130,246,0.40);
+    box-shadow:
+        0 0 0 8px rgba(59,130,246,0.06),
+        0 0 0 16px rgba(59,130,246,0.025),
+        0 0 60px rgba(0,0,0,0.7);
+    animation: ringPulse 3s infinite;
+    z-index: 1;
+}
+
+.content-direira .fundo-webcam .webcam-liveness-container .webcam-liveness {
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ─── OPERATIONS PANEL ─── */
+.Operacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.Operacoes .content-reconhecimento { text-align: center; margin-bottom: 4px; }
+
+.Operacoes .content-reconhecimento h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ddeeff;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.Operacoes .content-reconhecimento h1 span { color: #60A5FA; }
+
+.Operacoes .content-reconhecimento p {
+    color: #6a90b8;
+    font-size: 0.875rem;
+    margin-top: 6px;
+}
+
+.Operacoes .instrucoes {
+    background-color: #172a43;
+    border: 1px solid rgba(99, 160, 255, 0.10);
+    border-radius: 14px;
+    padding: 20px;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.Operacoes .instrucoes .logoInstrucoes {
+    background-color: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.22);
+    border-radius: 50%;
+    padding: 14px;
+    font-size: 1.9rem;
+    color: #60A5FA;
+}
+
+.Operacoes .instrucoes p { color: #6a90b8; font-size: 0.875rem; text-align: center; }
+
+.Operacoes .instrucoes .sucesso {
+    background-color: rgba(34,197,94,0.12);
+    border: 1px solid rgba(34,197,94,0.28);
+    color: #22c55e;
+    border-radius: 7px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+}
+
+.Operacoes .instrucoes .erro {
+    background-color: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.28);
+    color: #f87171;
+    border-radius: 7px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+}
+
+.Operacoes .ajudas { display: flex; gap: 10px; }
+
+.Operacoes .ajudas .auxilio {
+    background-color: #172a43;
+    border: 1px solid rgba(99, 160, 255, 0.10);
+    border-radius: 10px;
+    padding: 14px 10px;
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.Operacoes .ajudas .auxilio:hover {
+    border-color: rgba(99, 160, 255, 0.20);
+    background-color: #1c3050;
+}
+
+.Operacoes .ajudas .auxilio span.material-symbols-outlined {
+    background-color: rgba(59,130,246,0.11);
+    border: 1px solid rgba(59,130,246,0.18);
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #60A5FA;
+}
+
+.Operacoes .ajudas .auxilio p {
+    font-size: 0.78rem;
+    color: #6a90b8;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.Operacoes .btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.Operacoes .btns .btn {
+    border-radius: 10px;
+    padding: 0 28px;
+    height: 44px;
+    background-color: #3B82F6;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(59,130,246,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+}
+
+.Operacoes .btns .btn:hover {
+    background-color: #2563EB;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(59,130,246,0.45);
+}
+
+.Operacoes .btns .btn:active { transform: translateY(0); }
+
+.Operacoes .btns .btn:nth-child(2) {
+    background-color: transparent;
+    border: 1px solid rgba(99,160,255,0.20);
+    color: #60A5FA;
+    box-shadow: none;
+}
+
+.Operacoes .btns .btn:nth-child(2):hover {
+    background-color: rgba(59,130,246,0.09);
+    border-color: #3B82F6;
+    transform: translateY(-2px);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+    .container { flex-direction: column; margin-top: 60px; }
+
+    .barraLateral {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 14px;
+        border-right: none;
+        border-bottom: 1px solid rgba(99,160,255,0.10);
+    }
+
+    .barraLateral .ConfAuth { flex-direction: row; flex-wrap: wrap; }
+    .barraLateral .ConfAuth .Conf,
+    .barraLateral .ConfAuth .Confif { flex: 1; min-width: 140px; }
+
+    .content-direira { margin-left: 0; padding: 16px; width: 100%; }
+
+    .content-direira .fundo-webcam {
+        gap: 2.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 24px;
+    }
+
+    .content-direira .fundo-webcam .webcam-liveness-container { width: 250px; height: 280px; }
+
+    .Operacoes .instrucoes { max-width: 100%; }
+    .Operacoes .ajudas .auxilio { width: 150px; }
+}
+
+@media (max-width: 768px) {
+    .header { padding: 7px 14px; }
+    .container { margin-top: 56px; }
+    .content-direira { padding: 12px; }
+
+    .content-direira .fundo-webcam {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 14px;
+    }
+
+    .content-direira .fundo-webcam .webcam-liveness-container { width: 210px; height: 240px; }
+
+    .Operacoes { width: 100%; }
+    .Operacoes .content-reconhecimento h1 { font-size: 1.4rem; }
+    .Operacoes .instrucoes { width: 100%; max-width: 100%; padding: 14px; }
+    .Operacoes .ajudas { width: 100%; flex-wrap: wrap; justify-content: center; }
+    .Operacoes .ajudas .auxilio { width: 130px; }
+
+    .Operacoes .btns .btn {
+        flex: 1;
+        min-width: 110px;
+        max-width: 160px;
+        height: 40px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header { padding: 7px 10px; }
+    .nav-logo-text { font-size: 0.75rem; }
+    .container { margin-top: 52px; }
+    .barraLateral { padding: 10px; gap: 10px; }
+    .barraLateral .progresso { gap: 10px; padding-bottom: 12px; margin-bottom: 0; }
+    .barraLateral .progresso .logoFoto .svg { width: 42px; height: 42px; }
+
+    .content-direira { padding: 10px; }
+
+    .content-direja .fundo-webcam {
+        gap: 16px;
+        padding: 16px 12px;
+        border-radius: 14px;
+    }
+
+    .content-direira .fundo-webcam .webcam-liveness-container { width: 170px; height: 195px; }
+
+    .Operacoes .content-reconhecimento h1 { font-size: 1.15rem; }
+    .Operacoes .instrucoes { padding: 12px; }
+    .Operacoes .instrucoes .logoInstrucoes { font-size: 1.5rem; padding: 10px; }
+    .Operacoes .ajudas .auxilio { width: 105px; min-width: 90px; padding: 8px 4px; }
+
+    .Operacoes .btns { width: 100%; }
+    .Operacoes .btns .btn {
+        flex: 1;
+        height: 40px;
+        font-size: 13px;
+        min-width: 100px;
+        padding: 0 14px;
+    }
+}

@@ -1,0 +1,258 @@
+/* angola-data.component.css */
+.data-panel {
+  position: absolute;
+  top: 1px;
+  width: 100%;
+  background: rgba(5, 15, 25, 0.295);
+  border: 1px solid #1d3e57;
+  border-radius: 5px;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s;
+  z-index: 20;
+}
+a{
+  font-size:20px ;
+  color: gray;
+  margin-right: 10px;
+  
+}
+.data-panel.expanded {
+  box-shadow: 0 0 40px rgba(74, 252, 255, 0.4);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #2a6a9a;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(74, 252, 255, 0.2);
+  background: rgba(7, 23, 44, 0.6);
+  color: #8ac4ff;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.back-link:hover {
+  background: rgba(7, 23, 44, 0.8);
+  transform: translateY(-1px);
+}
+h1{
+  font-size: 15px;
+}
+strong{
+  color: rgba(21, 44, 245, 0.993);
+  padding: 1px 5px;
+  background-color: #0d1bdf6b;
+  border-radius: 5px;
+   font-style: italic;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #4a92ff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.province-list, .region-details {
+  padding: 15px 20px;
+}
+
+.province-list h3, .region-details h3 {
+  margin: 0 0 10px 0;
+  color: #8ac4ff;
+  font-size: 1.1rem;
+}
+
+.list-items {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.list-item {
+  padding: 8px 12px;
+  margin: 4px 0;
+  background: rgba(20, 40, 60, 0.5);
+  border: 1px solid #2a4a6a;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-item:hover {
+  background: #2a4a6a;
+  border-color: #4a74ffb0;
+  transform: translateX(-2px);
+}
+
+.list-item.active {
+  background: #1a5a8a;
+  border-color: #4afcff;
+  box-shadow: 0 0 15px #4afcff;
+}
+
+.item-name {
+  font-weight: bold;
+}
+
+.item-capital {
+  color: #8ac4ff;
+  font-size: 0.9rem;
+}
+
+.detail-card {
+  background: rgba(10, 30, 50, 0.8);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #2a4a6a;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  color: #8ac4ff;
+}
+
+.detail-value {
+  font-weight: bold;
+  color: #4afcff;
+}
+
+.municipality-section {
+  margin-top: 15px;
+}
+
+.municipality-section h4 {
+  color: #8ac4ff;
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+}
+
+.municipality-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.municipality-item {
+  padding: 6px 10px;
+  margin: 2px 0;
+  background: rgba(20, 40, 60, 0.3);
+  border: 1px solid #2a4a6a;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.municipality-item:hover {
+  background: #2a4a6a;
+  border-color: #4afcff;
+}
+
+.back-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 8px;
+  background: #1a3a5a;
+  border: 1px solid #4a98ffcb;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  background: transparent;
+  color: gray;
+  box-shadow: 0 0 15px #4ad5ffc0;
+}
+
+.info-message {
+  padding: 10px;
+  text-align: center;
+  color: #77bbff;
+  font-style: italic;
+  border-top: 1px solid #2a6a9a;
+}
+
+/* Scrollbar personalizada */
+.list-items::-webkit-scrollbar,
+.municipality-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list-items::-webkit-scrollbar-track,
+.municipality-list::-webkit-scrollbar-track {
+  background: #1a2a3a;
+}
+
+.list-items::-webkit-scrollbar-thumb,
+.municipality-list::-webkit-scrollbar-thumb {
+  background: #4afcff;
+  border-radius: 3px;
+}
+
+/* Responsividade */
+.data-panel {
+  max-height: calc(100vh - 12px);
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .data-panel {
+    padding: 10px;
+  }
+
+  .panel-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .panel-header h1 {
+    font-size: 1rem;
+  }
+
+  .province-list,
+  .region-details {
+    padding: 10px;
+  }
+
+  .list-items {
+    max-height: 25vh;
+  }
+
+  .list-item {
+    font-size: 0.9rem;
+  }
+}
+

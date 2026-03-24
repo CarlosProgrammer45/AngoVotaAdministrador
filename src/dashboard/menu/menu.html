@@ -1,0 +1,95 @@
+<body class="dark">
+  <!--area de movimentacao do menu-->
+  <div class="sidebar" 
+  [class.open]="menuFixo || hover"
+  (mouseenter)="hover = true"
+  (mouseleave)="hover = false">
+  <!--zona israel-->
+  
+    <!--zona do primeiro bloco cne premium-->
+      <aside>
+      <div class="box1CNE">
+        <ul>
+          <li>
+          <!--este botao tambem serve para as funcionalidades do menu-->
+          <button
+          class="butoncne"
+          (click)="toggleMenu()">
+          <span class="material-symbols-outlined" style="font-size: 1.25rem;"><i class="fa-solid fa-vote-yea card-icon"></i></span>
+          </button>
+          <h1 class="title">Controlo CNE</h1>
+          </li>
+          </ul>
+          </div>
+
+
+      <nav>
+      <!--Perfil-->
+      <ul>
+      <li>
+      <div class="perfil">
+      <i>
+      <div class="user"></div>
+      </i>
+      <div class="titleUser">
+      <span class="adm">Admin entral Logado</span>
+      <span class="nivel">Nível 5 - Supremo</span>
+      </div>
+      </div>
+      </li>
+      </ul>
+
+          <!--links-->
+          <ul>
+          <li>
+          <div class="links">
+          <a    routerLink="/dashboard" class="nav-item nav-item-active">
+          <i class="material-symbols-outlined" class="fa-solid fa-tachometer-alt card-icon"></i>
+          <span class="box3">Dashboard</span>
+          </a>
+          <a href="eleitores" class="nav-item nav-item-inactive">
+          <i class="material-symbols-outlined" class="fa-solid fa-users card-icon"></i>
+          <span class="box3">Eleitores</span>
+          </a>
+          <a routerLink="/candidato" class="nav-item nav-item-inactive">
+          <i class="material-symbols-outlined" class="fa-solid fa-user-tie card-icon"></i>
+          <span class="box3">Candidatos</span>
+          </a>
+          <a routerLink="/relatorio" class="nav-item nav-item-inactive">
+          <i class="material-symbols-outlined" class="fa-solid fa-file-alt card-icon"></i>
+          <span class="box3">Relatório</span>
+          </a>
+          </div>
+          </li>
+          </ul>
+
+           <!--area seguranca-->
+          <ul>
+          <li>
+          <div  class="seguranca">
+          <p    class="titleseguranca">Segurança</p>
+          <a   routerLink="/" class="nav-item nav-item-inactive">
+          <i    class="material-symbols-outlined" class="fa-solid fa-shield-alt card-icon"></i>
+          <span class="box3">Controle de Acesso</span>
+          </a>
+          </div>
+          </li>
+          </ul>
+          </nav>
+
+         <!--zona sistema-->
+         <ul>
+        <li>
+        <div class="sistema">
+        <span class="box3">
+        <button class="butonsistema">
+        <i class="material-symbols" class="fa-solid fa-sign-out-alt card-icon"></i>
+          Sair do Sistema
+        </button>
+        </span>
+        </div>
+        </li>
+        </ul>
+        </aside>
+        </div>
+</body>

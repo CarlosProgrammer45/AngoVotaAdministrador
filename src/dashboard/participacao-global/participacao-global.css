@@ -1,0 +1,143 @@
+
+/*area so corpo */
+.card {
+  background: #1b2433;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  height: 340px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  gap: 15px;
+  padding: 10px 20px;
+  margin-left: 270px;
+  position: relative;
+
+}
+.title {
+  margin-bottom: 20px;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+.barra{
+ border-left: 5px solid #2e6bff;
+padding-left: 9px;
+border-radius: 5px;
+}
+/*organizacao do interior do corpo*/
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/*a borda quadrada e clara do circulo*/
+.circle-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background-color: #19263d;
+}
+/*area do circulo*/
+svg {
+  transform: rotate(-90deg);
+}
+
+circle {
+  fill: none;
+  stroke-width: 20;
+}
+
+.bg {
+  stroke: #2e3a4f;
+}
+
+.progress {
+  stroke: #2e6bff;
+  stroke-linecap: round;
+  stroke-dasharray: 450; /* 2 * PI * 80 */
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 1s ease;
+}
+
+.percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.percentage h1 {
+  font-size: 36px;
+}
+
+.percentage p {
+  color: #9aa5b1;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/*as bolinhas coloridas*/
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.blue {
+  background: #2e6bff;
+  box-shadow: -2px -1px 20px 5px blue;
+}
+
+.gray {
+  background: #475569;
+}
+
+.controls button {
+  margin-top: 15px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #2e6bff;
+  color: white;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  opacity: 0.8;
+}
+
+p{
+ opacity: 0.5;
+}
+@media (max-width: 768px) {
+ 
+/*area so corpo */
+.card {
+  background: #1b2433;
+  padding: 12px;
+  border-radius: 12px;
+  width: 510px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  gap: 12px;
+  padding: 10px 20px;
+  margin-left: 75px;
+  position: relative;
+
+}
+.title {
+  margin-bottom: 15px;
+  font-size: 15px;
+  letter-spacing: 1px;
+} 
+}

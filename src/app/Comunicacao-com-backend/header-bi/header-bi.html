@@ -1,0 +1,95 @@
+  <!-- CONTEÚDO PRINCIPAL -->
+
+  
+  <main class="container-principal">
+
+    <div class="nav-logo-container">
+      <div class="nav-logo-icon">
+            <!-- Ícone hexágono com checkmark -->
+            <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="none" stroke="#3B82F6" stroke-width="1.5"/>
+                <polygon points="16,6 25,11 25,21 16,26 7,21 7,11" fill="rgba(59,130,246,0.1)" stroke="none"/>
+                <path d="M11 16l3.5 3.5L21 12" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        
+        <span class="nav-logo-text"><span class="logo-outline">Ango</span><span class="logo-accent">V<span>o</span>ta</span></span>
+    </div>
+
+    <!-- CARD DE VERIFICAÇÃO -->
+    <div class="cartao">
+      <div class="cartao-icone">
+        <i class="fa-solid fa-id-card"></i>
+      </div>
+
+      <h2 class="cartao-titulo">Verificação do Bilhete</h2>
+      <p class="cartao-subtitulo">Insira o número do seu Bilhete de Identidade</p>
+
+      <!-- INPUT - VERSÃO -->
+      <div class="grupo-input">
+        <label for="biInput" class="label-oculto">Número do BI</label>
+        <input 
+          id="biInput"
+          type="text"
+          name="numeroBI"
+          [(ngModel)]="numeroBI"
+          (ngModelChange)="validarFormato()"
+          placeholder="Digite o número do BI (ex: 00AA00AA0A000)"
+          maxlength="14"
+          class="input-bi"
+          [class.erro]="erroFormato && numeroBI?.length === 14"
+          [class.sucesso]="formatoValido"
+          autocomplete="off"
+        />
+        
+        <!-- Indicadores abaixo do input -->
+        <div class="indicadores-input">
+          <span class="contador-caracteres">{{ numeroBI?.length || 0 }}/14</span>
+          <span class="status-formato" *ngIf="numeroBI?.length === 14">
+            <span *ngIf="formatoValido" class="valido">✓ Válido</span>
+            <span *ngIf="erroFormato" class="invalido">✗ Inválido (use apenas letras e números)</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- BOTÃO -->
+      <button 
+        class="botao-verificar" 
+        (click)="verificarBI()"
+        [disabled]="!podeVerificar()"
+      >
+        <span *ngIf="!carregando">Verificar BI</span>
+        <span *ngIf="carregando" class="carregando">
+          <span class="spinner-pequeno"></span>
+          A verificar...
+        </span>
+      </button>
+
+      <!-- MENSAGEM DE INFORMAÇÃO -->
+      <p class="info-rodape">
+        <i class="fa-regular fa-circle-info"></i>
+        O número deve possuir 14 caracteres (letras e números)
+      </p>
+    </div>
+
+    <!-- ÁREA DE MENSAGENS -->
+    <div class="area-mensagens">
+      <div *ngIf="mensagemSucesso" class="mensagem sucesso">
+        <i class="fa-regular fa-circle-check"></i>
+        <span>{{ mensagemSucesso }}</span>
+        <button class="fechar" (click)="mensagemSucesso = ''">×</button>
+      </div>
+
+      <div *ngIf="mensagemErro" class="mensagem erro">
+        <i class="fa-regular fa-circle-xmark"></i>
+        <span>{{ mensagemErro }}</span>
+        <button class="fechar" (click)="mensagemErro = ''">×</button>
+      </div>
+
+      <div *ngIf="mensagemInfo" class="mensagem info">
+        <i class="fa-regular fa-circle-info"></i>
+        <span>{{ mensagemInfo }}</span>
+        <button class="fechar" (click)="mensagemInfo = ''">×</button>
+      </div>
+    </div>
+  </main>

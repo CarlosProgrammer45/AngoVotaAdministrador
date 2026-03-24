@@ -1,0 +1,110 @@
+/* corpo principal */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  padding: 10px 20px;
+  margin-left: 250px;
+}
+
+/* corpo */
+.card {
+  background-color: #0f1b2d;
+  padding: 20px;
+  border-radius: 10px;
+  color: #ffffff;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+
+}
+
+/* ===== LABEL ===== */
+.label {
+  font-size: 15px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ===== TÍTULO ===== */
+.card h2 {
+  font-size: 26px;
+  margin: 5px 0;
+
+}
+.card{
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== ÍCONE ===== */
+.icon {
+  font-size: 50px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  opacity: 0.2;
+  color: rgba(0, 0, 255, 0.664);
+}
+
+/* ===== BADGES ===== */
+.badge {
+  align-self: flex-start;
+  font-size:16px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.badge.success {
+  background-color: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+}
+
+.badge.info {
+  background-color: rgba(26, 188, 156, 0.15);
+  color: #1abc9c;
+}
+
+.badge.warning {
+  background-color: rgba(241, 196, 15, 0.15);
+  color: #f1c40f;
+}
+
+/* ===== EFEITO BRILHO ===== */
+.brilho {
+  text-shadow: -2px -1px 7px rgb(8, 219, 173);
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+ .dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  position: relative;
+  padding: 1px 10px;
+  left: 70px;
+  margin: 35px;
+}
+
+  .card h2 {
+    font-size: 20px;
+  }
+  .card{
+    width: 80%;
+    margin-top:-15px;
+    margin-left: -40px;
+  }
+  .icon {
+    font-size: 55px;
+  }
+}

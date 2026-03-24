@@ -1,0 +1,123 @@
+/* ── Variável da sidebar (deve ser igual ao width do sidebar) ── */
+:host {
+  --sidebar-w: 230px;
+  display: block;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  background: #0f1f3a;
+  color: #fff;
+  margin-left: var(--sidebar-w);
+  min-height: 56px;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid rgba(59,130,246,0.1);
+}
+
+/* LEFT */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.back {
+  background: transparent;
+  border: none;
+  color: #9bb3ff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.back:hover {
+  background: rgba(155, 179, 255, 0.1);
+  border: none;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title-row h1 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.badge {
+  background: rgba(21, 123, 224, 0.35);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #7fc3ff;
+  white-space: nowrap;
+}
+
+.sub {
+  font-size: 11px;
+  color: #9aa8c7;
+  margin: 0;
+}
+
+/* RIGHT */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.export {
+  background: #13284a;
+  color: #fff;
+  border: 1px solid #2c3f6b;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.export:hover {
+  background: rgba(19, 40, 74, 0.8);
+  border-color: rgba(100, 160, 255, 0.5);
+  color: #fff;
+}
+
+/* ── RESPONSIVO ── */
+@media (max-width: 768px) {
+  .topbar {
+    margin-left: 0;
+    padding: 10px 16px;
+  }
+
+  .title-row h1 {
+    font-size: 15px;
+  }
+
+  .right {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

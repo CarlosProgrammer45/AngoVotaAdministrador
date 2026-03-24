@@ -1,0 +1,62 @@
+<body>
+
+  <div class="dashboard">
+  
+    <!-- CARD GÊNERO -->
+    <div class="card gender">
+      <h2 style="color: aliceblue;">
+        <i class="fa-solid fa-chart-pie card-icon"></i>
+        Distribuição por Gênero
+      </h2>
+  
+      <div class="graficoDonut">
+         <apx-chart 
+          [series]="ChartGenero.series"
+          [chart]="ChartGenero.chart"
+          [labels]="ChartGenero.labels"
+          [colors]="ChartGenero.colors!"
+          [responsive]="ChartGenero.responsive">
+         </apx-chart>
+      </div>
+  
+      <div class="gender-info">
+        <div class="info-box">
+          <h3><span class="dot purple"></span> {{ChartGenero.labels[0]}}</h3>
+          <strong></strong>
+          <span>Percentagem: {{ChartGenero.series[0]}}</span>
+        </div>
+  
+        <div class="info-box">
+          <h3><span class="dot blue"></span>{{ChartGenero.labels[1]}}</h3>
+          <strong></strong>
+          <span>Percentagem: {{ChartGenero.series[1]}}</span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- CARD FAIXA ETÁRIA -->
+    <div class="card age">
+      <h1 class="title">
+        <i class="fa-solid fa-chart-column card-icon"></i>
+        Participação por Faixa Etária
+      </h1>
+  
+      <!-- Gráfico de Barras ApexCharts -->
+       <div class="graficoBarra">
+          <apx-chart
+              [series]="chartOptionsFaixa.series!"
+              [chart]="chartOptionsFaixa.chart!"
+              [xaxis]="chartOptionsFaixa.xaxis!"
+              [dataLabels]="chartOptionsFaixa.dataLabels!"
+              [yaxis]="chartOptionsFaixa.yaxis!"
+              [title]="chartOptionsFaixa.title!"
+              [plotOptions]="chartOptionsFaixa.plotOptions!">
+          </apx-chart>
+      </div>
+
+    </div>
+  
+  </div>
+  
+  </body>
+  

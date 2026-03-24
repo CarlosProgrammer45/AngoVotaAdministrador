@@ -1,0 +1,17 @@
+<div class="card">
+    <h2>Criar Perfil Rápido</h2>
+  
+    <input
+      type="text"
+      placeholder="Número do BI"
+      [(ngModel)]="numero_bi"
+    />
+  
+ 
+  
+    <button (click)="criarPerfilRapido()" [disabled]="loading">
+      {{ loading ? 'A criar...' : 'Criar Perfil' }}
+    </button>
+  
+    <p class="mensagem">{{ mensagem }}</p>
+  </div>

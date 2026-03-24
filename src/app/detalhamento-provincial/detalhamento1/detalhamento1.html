@@ -1,0 +1,165 @@
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div>
+      <div class="title"><i class="fa-solid fa-map-location"></i> Detalhamento Provincial</div>
+      <div class="subtitle">Análise granular de votos e ocorrências por província e município.</div>
+    </div>
+
+    <div class="select">  Selecionar Província: <select name="" id="">
+     <option value=""><i class="fa-solid fa-location-dot"></i>Luanda</option>
+     <option value="">Benguela</option>
+     <option value="">Huambo</option>
+     <option value="">Cuando Cubango</option>
+     <option value="">Cabinda</option>
+    </select></div>
+  </div>
+
+
+  <div class="cards">
+    <div class="card blue">
+      <h4>TOTAL ELEITORES <i class="fa-solid fa-users"></i></h4>
+      <div class="big">2.418.932</div>
+      <small>Registrados em Luanda</small>
+    </div>
+
+    <div class="card green">
+      <h4>PARTICIPAÇÃO <i class="fa-solid fa-user"></i></h4>
+      <div class="big">68.4%</div>
+      <small>+2.1% vs 2017</small>
+    </div>
+
+    <div class="card yellow">
+      <h4>OCORRÊNCIAS <i class="fa-solid fa-triangle-exclamation"></i></h4>
+      <div class="big">14</div>
+      <small>2 críticas em análise</small>
+    </div>
+  </div>
+
+
+  <div class="layout">
+
+    <div class="table-box">
+      <div class="table-header">
+        <h3>Municípios de Luanda</h3>
+        <div class="btns">
+          <button>Filtrar</button>
+          <button>CSV</button>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>MUNICÍPIO</th>
+            <th>ELEITORES REG.</th>
+            <th>VOTOS CONTADOS</th>
+            <th>PARTICIPAÇÃO (%)</th>
+            <th>STATUS</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Belas</td>
+            <td>145.203</td>
+            <td style="color:#4bb3ff;">98.450</td>
+            <td>
+              <div class="progress"><div class="bar" style="width:67.8%"></div></div>
+              67.8%
+            </td>
+            <td><span class="status finalizado">FINALIZADO</span></td>
+          </tr>
+
+          <tr>
+            <td>Cacuaco</td>
+            <td>210.550</td>
+            <td style="color:#4bb3ff;">132.646</td>
+            <td>
+              <div class="progress"><div class="bar" style="width:63%"></div></div>
+              63.0%
+            </td>
+            <td><span class="status contagem">EM CONTAGEM</span></td>
+          </tr>
+
+          <tr>
+            <td>Cazenga</td>
+            <td>350.112</td>
+            <td style="color:#4bb3ff;">248.580</td>
+            <td>
+              <div class="progress"><div class="bar" style="width:71%"></div></div>
+              71.0%
+            </td>
+            <td><span class="status finalizado">FINALIZADO</span></td>
+          </tr>
+
+          <tr>
+            <td>Icolo e Bengo</td>
+            <td>45.890</td>
+            <td style="color:#4bb3ff;">29.828</td>
+            <td>
+              <div class="progress"><div class="bar" style="width:65%"></div></div>
+              65.0%
+            </td>
+            <td><span class="status finalizado">FINALIZADO</span></td>
+          </tr>
+
+          <tr>
+            <td>Luanda (Sede)</td>
+            <td>890.450</td>
+            <td style="color:#4bb3ff;">650.028</td>
+            <td>
+              <div class="progress"><div class="bar" style="width:73%"></div></div>
+              73.0%
+            </td>
+            <td><span class="status auditando">AUDITANDO</span></td>
+          </tr>
+
+          <tr>
+            <td>Quiçama</td>
+            <td>22.100</td>
+            <td style="color:#4bb3ff;">12.155</td>
+            <td>
+              <div class="progress"><div class="bar" style="width:55%"></div></div>
+              55.0%
+            </td>
+            <td><span class="status finalizado">FINALIZADO</span></td>
+          </tr>
+
+          <tr>
+            <td>Talatona</td>
+            <td>310.220</td>
+            <td style="color:#4bb3ff;">230.180</td>
+            <td>
+              <div class="progress"><div class="bar" style="width:74.2%"></div></div>
+              74.2%
+            </td>
+            <td><span class="status contagem">EM CONTAGEM</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="side">
+      <div class="panel">
+        <h3>Comparativo Nacional</h3>
+        <small>Taxa de participação (%) por província.</small>
+        <div class="chart">68.4%</div>
+        <small>Média Nacional: <b>61.2%</b></small>
+        <small style="display: block; color: #8fa3bf;">LUA HUL CAB MOX UIO IUH MNB GYJ BGU KKJ</small>
+      </div>
+
+      <div class="panel">
+        <h3><i class="fa-solid fa-circle-exclamation"></i> Nota Metodológia</h3>
+        <div class="note">
+          Os dados apresentados para a província de Luanda
+          consolidam os boletins de urna recebidos.
+        </div>
+      </div>
+
+      </div>
+    </div>

@@ -1,0 +1,348 @@
+:root {
+  --bg-dark: #020617;
+  --blue: #3b82f6;
+  --blue-glow: rgba(59, 130, 246, 0.35);
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --erro-cor: #f87171;
+  --sucesso-cor: #4ade80;
+}
+
+/* ========================
+   LAYOUT PRINCIPAL
+======================== */
+
+.mainCriar {
+  min-height: 100vh;
+  background-color: #020617;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 70% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(59, 130, 246, 0.07) 0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.formWrapper {
+  width: 100%;
+  max-width: 960px;
+}
+
+/* ========================
+   CABEÇALHO
+======================== */
+
+.cabecalho {
+  margin-bottom: 56px;
+}
+
+.tag {
+  color: #3b82f6;
+  letter-spacing: 4px;
+  font-size: 11px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.cabecalho h1 {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+}
+
+.cabecalho p {
+  color: #64748b;
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin-top: 16px;
+}
+
+/* ========================
+   GRID DO FORMULÁRIO
+======================== */
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+/* ========================
+   CAMPOS DE TEXTO
+======================== */
+
+.camposTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  color: #94a3b8;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.campo input,
+.campo textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  padding: 14px 18px;
+  outline: none;
+  resize: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  font-family: inherit;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+  color: #334155;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-glow);
+}
+
+.erro {
+  color: var(--erro-cor);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+/* ========================
+   UPLOAD DE IMAGENS
+======================== */
+
+.camposUpload {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.uploadBox {
+  position: relative;
+  border: 1px dashed var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  background: var(--glass);
+  flex: 1;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadBox:hover {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-glow);
+}
+
+.uploadBox.temImagem {
+  border-style: solid;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.uploadPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+  text-align: center;
+  padding: 24px;
+}
+
+.uploadPlaceholder span {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #64748b;
+}
+
+.uploadPlaceholder small {
+  font-size: 11px;
+  color: #334155;
+}
+
+.uploadIcone {
+  width: 44px;
+  height: 44px;
+  color: #334155;
+}
+
+.uploadIcone svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Imagem de pré-visualização */
+.previewImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Overlay ao passar o rato em cima de uma imagem já carregada */
+.uploadOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+  color: white;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+
+.uploadBox:hover .uploadOverlay {
+  opacity: 1;
+}
+
+/* Caixa de fundo mais alta */
+.fundoBox {
+  min-height: 200px;
+}
+
+/* ========================
+   LINHA DE AÇÕES (BOTÃO)
+======================== */
+
+.acoes {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.mensagemStatus {
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.mensagemStatus.sucesso {
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  color: var(--sucesso-cor);
+}
+
+.mensagemStatus.erro {
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  color: var(--erro-cor);
+}
+
+.btnSubmit {
+  padding: 16px 48px;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.25s, box-shadow 0.25s;
+  animation: pulse 2s ease infinite;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btnSubmit:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.btnSubmit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  animation: none;
+}
+
+/* ========================
+   LOADER DE PONTOS
+======================== */
+
+.loader {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dotLoader {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: white;
+  animation: bounce 0.9s ease infinite;
+}
+
+.dotLoader:nth-child(2) { animation-delay: 0.15s; }
+.dotLoader:nth-child(3) { animation-delay: 0.30s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0);    opacity: 0.4; }
+  40%           { transform: translateY(-7px); opacity: 1;   }
+}
+
+/* ========================
+   PULSE (igual ao candidatos)
+======================== */
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(59, 130, 246, 0.5); }
+  50%  { box-shadow: 0 0 0 14px rgba(59, 130, 246, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(59, 130, 246, 0);    }
+}
+
+/* ========================
+   RESPONSIVO
+======================== */
+
+@media (max-width: 700px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mainCriar {
+    padding: 40px 20px;
+  }
+}

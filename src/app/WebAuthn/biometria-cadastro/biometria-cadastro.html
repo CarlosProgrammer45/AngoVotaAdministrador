@@ -1,0 +1,101 @@
+<div class="biometria-container">
+
+   <div class="nav-logo-container">
+        <div class="nav-logo-icon">
+            <!-- Ícone hexágono com checkmark -->
+            <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="16,2 28,9 28,23 16,30 4,23 4,9" fill="none" stroke="#3B82F6" stroke-width="1.5"/>
+                <polygon points="16,6 25,11 25,21 16,26 7,21 7,11" fill="rgba(59,130,246,0.1)" stroke="none"/>
+                <path d="M11 16l3.5 3.5L21 12" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <span class="nav-logo-text"><span class="logo-outline">Ango</span><span class="logo-accent">V<span>o</span>ta</span></span>
+    </div>
+    
+    <div class="card">
+      <div class="card-header">
+        <h2>Registo Biométrico</h2>
+        <p class="subtitle">Complete o registo da sua biometria para finalizar o cadastro</p>
+      </div>
+  
+      <div class="card-body">
+        <!-- Mensagem de feedback (agora aparece antes do botão) -->
+        <div *ngIf="mensagem" class="message-container" [ngClass]="{
+          'success-message': mensagem.includes('sucesso') || mensagem.includes('realizada com sucesso'),
+          'error-message': mensagem.includes('Falha') || mensagem.includes('obrigatório') || mensagem.includes('erro'),
+          'info-message': mensagem.includes('iniciar') || mensagem.includes('processar')
+        }">
+          <i class="message-icon" [ngClass]="{
+            'success-icon': mensagem.includes('sucesso') || mensagem.includes('realizada com sucesso'),
+            'error-icon': mensagem.includes('Falha') || mensagem.includes('obrigatório') || mensagem.includes('erro'),
+            'info-icon': mensagem.includes('iniciar') || mensagem.includes('processar')
+          }">
+            {{ mensagem.includes('sucesso') || mensagem.includes('realizada com sucesso') ? '✓' : 
+               (mensagem.includes('Falha') || mensagem.includes('obrigatório') || mensagem.includes('erro') ? '✕' : 'ℹ') }}
+          </i>
+          <p>{{ mensagem }}</p>
+          <button *ngIf="mensagem.includes('Falha') || mensagem.includes('erro')" class="close-btn" (click)="mensagem = ''">×</button>
+        </div>
+  
+        <!-- Campo de entrada do BI -->
+        <div class="form-group">
+          <label for="numero_bi">Número do Bilhete de Identidade</label>
+          <div class="input-wrapper">
+            <svg class="icon bi-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Card outline -->
+              <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+              <!-- Top stripe -->
+              <rect x="3" y="5" width="18" height="3" fill="currentColor" opacity="0.3"/>
+              <!-- Chip rectangle -->
+              <rect x="5" y="11" width="3" height="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <!-- Dots -->
+              <circle cx="9.5" cy="12" r="0.8" fill="currentColor"/>
+              <circle cx="9.5" cy="14" r="0.8" fill="currentColor"/>
+              <circle cx="11" cy="12" r="0.8" fill="currentColor"/>
+              <circle cx="11" cy="14" r="0.8" fill="currentColor"/>
+            </svg>
+            <input
+            minlength="14"
+            maxlength="14" 
+              type="text" 
+              id="numero_bi"
+              [(ngModel)]="numero_bi_enc" 
+              placeholder="Digite o número do seu BI"
+              [disabled]="carregando"
+            >
+          </div>
+        </div>
+  
+        <!-- Mensagem do WebAuthn (aparece durante o processo) -->
+        <div *ngIf="carregando && mensagem.includes('iniciar')" class="webauthn-message">
+          <p>
+            <i>🔐</i>
+            {{ mensagem }}
+            <i>⏳</i>
+          </p>
+        </div>
+  
+        <!-- Botão de ação -->
+        <div class="action-group">
+          <button 
+            (click)="enviar()" 
+            class="btn-primary"
+            [disabled]="carregando || !numero_bi_enc"
+          >
+            <span *ngIf="!carregando">Iniciar Biometria</span>
+            <span *ngIf="carregando" class="loading">
+              <i class="spinner"></i>
+              A processar...
+            </span>
+          </button>
+        </div>
+      </div>
+  
+      <!-- Loading overlay (aparece durante o processo do WebAuthn) -->
+      <div *ngIf="carregando && !mensagem.includes('sucesso') && !mensagem.includes('Falha')" class="loading-overlay">
+        <div class="spinner-large"></div>
+        <p>A processar sua biometria...</p>
+        <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">Por favor, siga as instruções do seu dispositivo</p>
+      </div>
+    </div>
+  </div>

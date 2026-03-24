@@ -1,0 +1,98 @@
+ 
+
+<body>
+
+      <app-menu></app-menu>
+
+
+          @if(contador){
+
+
+             <div class="header">
+      <div>
+        <h1>Eleições Gerais de Angola</h1>
+          <p>Resultados dos Votos</p>
+       </div>
+       <div class="sync">SINCRONIZAÇÃO EM TEMPO REAL</div>
+       </div>
+  
+   
+               <!-- DASHBOARD -->
+       <div class="dashboard-card">
+               <!-- TOTAL REGISTRADOS -->
+        <div class="item">
+        <div class="icon">
+          <i class="fa-solid fa-user-tie"></i>
+        </div>
+        <div>
+          <span class="label">TOTAL DE CANDIDATOS</span>
+          <h2>{{totalCandidatos }}</h2>
+        </div>
+        </div>
+  
+
+
+      <div class="divider"></div>
+      <!-- VENCEDOR -->
+      <div class="item">
+      <div>
+           <span class="label">TOTAL VOTOS </span>
+           <h2> {{ votosTotais}}</h2>
+     </div>
+     <div class="icon blue">
+          <i class="fa-solid fa-users"></i>
+     </div>
+     </div>
+ 
+
+    </div>
+    
+  
+    <!-- CARD PRINCIPAL -->
+     <div class="desliza">
+    <div class="card">
+  <div class="controls">
+    <select [(ngModel)]="provinciaSelecionada" (change)="filtrar()">
+      <option value="">Todas as Províncias</option>
+      <option *ngFor="let p of provincias" [value]="p">{{p}}</option>
+    </select>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>CANDIDATO</th>
+        <th>PARTIDOS</th>
+        <th>PROVÍNCIA</th>
+        <th>VOTOS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let r of NumeroDeVotos">
+        <tr *ngFor="let p of r.provincias">
+          <td>{{ r.nome }}</td>
+          <td>{{ r.partido }}</td>
+          <td>{{ p.nome }}</td>
+          <td>{{ p.votos }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+            <div class="nota-rodape">
+            <div class="legenda">
+            <div class="legenda-item" *ngFor="let c of candidatos"><span class="cor unita"></span> {{c.partido}}</div>
+            </div>
+            <div class="fonte">
+            Fonte: DW África / Comissão Nacional Eleitoral (CNE) de Angola [citação:1]
+            </div>
+            </div>
+
+
+            
+        </div>
+
+       }
+    
+     
+        </body>

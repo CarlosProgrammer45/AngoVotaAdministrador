@@ -1,0 +1,57 @@
+.logo-text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+select{
+        font-weight: 700;
+        font-size: 14px;
+        font-family: var(--font-display);
+        border: none;
+        cursor: pointer;
+        background: var(--color-bg-light);
+        color: black;
+        padding: 6px 10px;
+        border-radius: 4px;
+       
+
+       
+}
+
+
+
+
+
+
+.header-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+
+
+   
+    color: #fff;
+
+    .header1{
+
+        img{
+            width: 30px;
+            height: 30px;
+        }
+        
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        h1{
+            color: black;
+            span{
+                color: var(--color-primary);
+            }
+        }
+    }
+}
+
+
+

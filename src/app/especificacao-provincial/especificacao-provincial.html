@@ -1,0 +1,42 @@
+<app-menu></app-menu>
+<app-header></app-header>
+
+<div class="deslizar">
+  <main class="main-detelhamento-provincial" [style.margin-left]="isMobile ? '0' : '230px'">
+
+    <!-- Título -->
+    <h1 class="page-title">Detalhamento Provincial</h1>
+    <p class="page-subtitle">Resumo de votos por província.</p>
+
+    <!-- Select com todas as 21 províncias -->
+    <div class="filters-bar">
+      <select class="filter-select" [(ngModel)]="provinciaSelecionada" (change)="onProvinciaChange()">
+        <option value="">Todas Provincias</option>
+        <option *ngFor="let p of provincias" [value]="p">{{ p }}</option>
+      </select>
+    </div>
+
+    <!-- Tabela Simplificada -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Província</th>
+            <th>Total Eleitores</th>
+            <th>Votos Totais</th>
+            <th>Percentagem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let campo of campos">
+            <td>{{ campo.provincia }}</td>
+            <td>{{ formatNumber(campo.totais_Eleitores) }}</td>
+            <td>{{ formatNumber(campo.total_votos) }}</td>
+             <td>{{ formatNumber(campo.total_percentagem)}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>

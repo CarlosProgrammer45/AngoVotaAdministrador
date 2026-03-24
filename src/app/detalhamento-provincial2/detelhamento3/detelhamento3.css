@@ -1,0 +1,249 @@
+
+body{
+background:linear-gradient(180deg,#071428,#0b1424);
+color:#e6edf7;
+padding:30px;
+}
+
+.container{
+ max-width:1320px;
+ margin:auto}
+
+/* header */
+.top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:30px;
+}
+
+.back{color:#8fa3bf;font-size:14px;margin-bottom:10px}
+.title{font-size:36px;font-weight:700}
+.subtitle{color:#8fa3bf;margin-top:6px}
+
+.select{
+background:#17253d;
+padding:18px 22px;
+border-radius:14px;
+color:#c7d3e7;
+min-width:260px;
+border:1px solid rgba(255,255,255,.05);
+}
+select{
+background:#17253d;
+padding:10px 12px;
+border-radius:14px;
+color:#c7d3e7;
+min-width:260px;
+border:1px solid rgba(255,255,255,.05);
+}
+
+/* cards */
+.cards{
+display:flex;
+gap:18px;
+margin:28px 0;
+}
+.card{
+
+background:#16233a;
+padding:22px;
+border-radius:16px;
+position:relative;
+border:1px solid rgba(255,255,255,.04);
+}
+.card h4{
+font-size:13px;
+color:#8fa3bf;
+margin-bottom:10px;
+}
+.big{font-size:28px;font-weight:700;margin-bottom:6px}
+
+.blue{border-right:4px solid #2fa8ff}
+.green{border-right:4px solid #1ec28b}
+.yellow{border-right:4px solid #f3b431}
+
+/* layout */
+.layout{display:flex;gap:20px}
+.left{flex:3}
+.right{flex:1.2;display:flex;flex-direction:column;gap:20px}
+
+/* panels */
+.panel{
+background:#16233a;
+border-radius:18px;
+padding:22px;
+border:1px solid rgba(255,255,255,.04);
+}
+
+.panel h3{
+font-size:20px;
+margin-bottom:20px;
+}
+
+/* tabela */
+.table-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.btns button{
+background:#1d2c48;
+border:none;
+color:#c7d3e7;
+padding:8px 14px;
+border-radius:8px;
+margin-left:8px;
+cursor:pointer;
+}
+
+table{width:100%;border-collapse:collapse}
+th{
+text-align:left;
+font-size:12px;
+color:#8fa3bf;
+padding:14px 10px;
+}
+td{
+padding:16px 10px;
+border-top:1px solid rgba(255,255,255,.05);
+}
+
+.progress{
+height:8px;
+background:#0a1628;
+border-radius:20px;
+overflow:hidden;
+margin-bottom:5px;
+}
+.progress span{
+display:block;
+height:100%;
+background:#2cc1d6;
+}
+
+/* status */
+.status{
+padding:6px 12px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;
+}
+.final{background:#0f2e23;color:#2ad69f}
+.count{background:#162f53;color:#57b4ff}
+.audit{background:#3c2e10;color:#ffc857}
+
+/* ranking */
+.rank-item{margin-bottom:22px}
+.rank-title{margin-bottom:6px;font-weight:600}
+.rank-bar{
+height:8px;
+background:#0a1628;
+border-radius:20px;
+overflow:hidden;
+}
+.rank-bar span{
+display:block;
+height:100%;
+background:#2cc1d6;
+}
+
+.rank-number{color:#f3b431;margin-right:6px}
+.rank-percent{float:right;color:#3ecbff}
+
+/* footer info */
+.note{
+color:#9fb1c9;
+line-height:1.6;
+font-size:14px;
+}
+
+.smallbar{
+height:8px;
+background:#0a1628;
+border-radius:20px;
+margin-top:10px;
+overflow:hidden;
+}
+.smallbar span{
+display:block;
+height:100%;
+background:#6f7f95;
+}
+@media (max-width: 768px){
+
+  .title{
+    font-size:26px;
+  }
+
+  .top{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .select{
+    width:100%;
+  }
+
+  select{
+    width:100%;
+  }
+
+  .cards{
+    gap:15px;
+  }
+
+  .card{
+    width:100%;
+  }
+
+  .bar-label{
+    width:80px;
+    font-size:13px;
+  }
+
+  .bar-value{
+    width:35px;
+    font-size:13px;
+  }
+
+  .panel{
+    padding:18px;
+  }
+
+  table{
+    min-width:600px;
+  }
+  .container{
+   margin: 0;
+  }
+
+}
+
+/* Mobile pequeno */
+@media (max-width: 480px){
+
+  body{
+    padding:15px;
+  }
+
+  .title{
+    font-size:22px;
+  }
+
+  .big{
+    font-size:22px;
+  }
+
+  .panel h3{
+    font-size:16px;
+  }
+
+  .btns button{
+    padding:6px 10px;
+    font-size:12px;
+  }
+
+}

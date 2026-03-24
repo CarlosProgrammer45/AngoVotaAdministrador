@@ -1,0 +1,23 @@
+
+body{
+  background:linear-gradient(180deg,#0b1323,#0a1120);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow-x: hidden;
+  margin-bottom: 0;
+
+}
+.desliza{
+  animation: desliza 1s ease-out;
+}
+@keyframes desliza{
+  from{
+    transform: translateX(-300px);
+    opacity: 0;
+  }
+  to{
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,26 @@
+
+body{
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  height: 100vh;
+  overflow-x: hidden;
+}
+.menu{
+  position: fixed;
+  margin-left: -500px;
+}
+
+.deslizar{
+    animation: deslizar 1s ease-in-out;
+}
+
+@keyframes deslizar{
+    from{
+        transform: translateX(-300px);
+        opacity: 0;
+    }
+
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

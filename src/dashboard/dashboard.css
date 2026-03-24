@@ -1,0 +1,64 @@
+/*
+<div class="dashboard">
+  <app-header></app-header>
+ <app-menu></app-menu>
+ <app-contador></app-contador>
+ <app-participacao-global></app-participacao-global>
+ <div class="influencia">
+ <app-provincia-influencia></app-provincia-influencia>
+</div>
+<app-localizacao></app-localizacao>
+<app-resumo-por-provincia></app-resumo-por-provincia>
+</div>*/
+body{
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+
+.dashboard{
+ background-color: rgba(16, 16, 34, 0.921);
+ overflow-x: hidden;
+ margin-bottom: 0;
+ margin: 0;
+}
+.juncao{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+@media (max-width: 768px) {
+  .juncao{
+    width: 200px;
+    display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px;
+  position: relative;
+  padding: 1px 10px;
+ 
+  
+  }
+}
+/*segunda juncao do mapa e do resumo*/
+.juncao2{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+}
+@media (max-width: 768px) {
+  .juncao2{
+    width: 200px;
+     display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px;
+  position: relative;
+  padding: 1px 10px;
+ 
+   }
+  }

@@ -1,0 +1,61 @@
+/* estatisticas.component.css */
+
+:host {
+   display: block;
+ }
+ 
+ /* Reset global da página */
+ * {
+   box-sizing: border-box;
+ }
+ 
+ body,
+ :host {
+   margin: 0;
+   padding: 0;
+   background-color: #091424;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+ }
+ 
+ /* ── Wrapper principal do conteúdo ──
+    Não usar margin-left aqui — cada sub-componente
+    já trata o seu próprio offset da sidebar via --sidebar-w.
+    Este wrapper só serve para espaçamento vertical entre secções. */
+ .conteudo-pagina {
+   display: flex;
+   flex-direction: column;
+   gap: 0; /* gap controlado por padding-bottom de cada componente */
+ }
+ 
+ /* Espaço entre a secção de distribuição e o fluxo */
+ .section-gap {
+   height: 4px;
+ }
+
+
+ .transition-fade {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+html.is-animating .transition-fade {
+  opacity: 0;
+}
+
+.deslizar{
+    animation: deslizar 1s ease-in-out;
+    
+}
+
+@keyframes deslizar{
+    from{
+        transform: translateX(-300px);
+        opacity: 0;
+    }
+
+    to{
+        transform: translateX(0);
+        opacity: 1;
+
+    }
+}

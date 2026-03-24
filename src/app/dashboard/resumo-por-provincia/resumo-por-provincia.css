@@ -1,0 +1,88 @@
+
+.card {
+  width: 400px;
+  background: #1c2536;
+  color: #ebebeb;
+  border-radius: 14px;
+  padding: 18px 0;
+  height:630px ;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.card h2 {
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding: 0 20px 45px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.table {
+  margin-top: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.header {
+  color: #9aa4b2;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.row span:nth-child(2) {
+  margin-right: 68px;
+  font-weight: 500;
+  color: #9aa4b2;
+}
+
+.stutas {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ativo {
+  background: rgba(0, 180, 140, 0.15);
+  color: #00d1a0;
+  border: 1px solid rgba(0, 180, 140, 0.35);
+  padding: 3.6px;
+  border-radius: 10px;
+}
+
+.lento {
+  background: rgba(255, 170, 0, 0.15);
+  padding: 3.6px;
+  color: #ffb400;
+  border: 1px solid rgba(255, 170, 0, 0.35);
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90vw;
+    height: auto;
+    margin-left: 0;
+    margin: 0 auto;
+    padding: 15px 10px;
+  }
+  
+  .card h2 {
+    font-size: 14px;
+    padding: 0 15px 30px;
+  }
+  
+  .row {
+    padding: 12px 15px;
+    font-size: 12px;
+  }
+}

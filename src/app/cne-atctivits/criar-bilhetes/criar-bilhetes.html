@@ -1,0 +1,43 @@
+<form [formGroup]="bilheteForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Número BI</label>
+      <input formControlName="numero_bi" type="text" [ngClass]="getClass('numero_bi')" minlength="14" maxlength="14" />
+      <div *ngIf="bilheteForm.get('numero_bi')?.invalid && bilheteForm.get('numero_bi')?.touched" class="error">
+        Número do BI deve ter exatamente 14 caracteres alfanuméricos.
+      </div>
+    </div>
+  
+    <div>
+      <label>Nome Completo</label>
+      <input formControlName="nome_completo" type="text" [ngClass]="getClass('nome_completo')" />
+      <div *ngIf="bilheteForm.get('nome_completo')?.invalid && bilheteForm.get('nome_completo')?.touched" class="error">
+        Nome deve ter pelo menos 3 caracteres.
+      </div>
+    </div>
+  
+    <div>
+      <label>Data de Nascimento</label>
+      <input formControlName="data_nascimento" type="date" [ngClass]="getClass('data_nascimento')" />
+      <div *ngIf="bilheteForm.get('data_nascimento')?.invalid && bilheteForm.get('data_nascimento')?.touched" class="error">
+        Data de nascimento é obrigatória.
+      </div>
+    </div>
+  
+    <div>
+      <label>Gênero</label>
+      <input formControlName="genero" type="text" [ngClass]="getClass('genero')" />
+    </div>
+  
+    <div>
+      <label>Nacionalidade</label>
+      <input formControlName="nacionalidade" type="text" [ngClass]="getClass('nacionalidade')" />
+    </div>
+  
+    <div>
+      <label>Local de Emissão</label>
+      <input formControlName="local_emissao" type="text" [ngClass]="getClass('local_emissao')" />
+    </div>
+  
+    <button type="submit" [disabled]="bilheteForm.invalid">Criar Bilhete</button>
+  </form>
+  

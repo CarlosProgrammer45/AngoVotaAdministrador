@@ -1,0 +1,120 @@
+<div class="login-container">
+  <div class="card">
+    <div class="card-header">
+      <h2>Login Biométrico</h2>
+      <p class="subtitle">Aceda à sua conta de forma segura e rápida</p>
+    </div>
+
+    <div class="card-body">
+      <!-- Mensagem de feedback -->
+      <div *ngIf="mensagem" class="message-container" [ngClass]="{
+        'success-message': mensagem.includes('sucesso') || mensagem.includes('bem-sucedido'),
+        'error-message': mensagem.includes('Falha') || mensagem.includes('erro') || mensagem.includes('cancelada'),
+        'info-message': mensagem.includes('Aguardando') || mensagem.includes('iniciar')
+      }">
+        <i class="message-icon" [ngClass]="{
+          'success-icon': mensagem.includes('sucesso') || mensagem.includes('bem-sucedido'),
+          'error-icon': mensagem.includes('Falha') || mensagem.includes('erro') || mensagem.includes('cancelada'),
+          'info-icon': mensagem.includes('Aguardando') || mensagem.includes('iniciar')
+        }">
+          {{ mensagem.includes('sucesso') || mensagem.includes('bem-sucedido') ? '✓' : 
+             (mensagem.includes('Falha') || mensagem.includes('erro') || mensagem.includes('cancelada') ? '✕' : 'ℹ') }}
+        </i>
+        <p>{{ mensagem }}</p>
+        <button *ngIf="mensagem.includes('Falha') || mensagem.includes('erro') || mensagem.includes('cancelada')" 
+                class="close-btn" (click)="mensagem = ''">×</button>
+      </div>
+
+      <!-- Informação sobre biometria -->
+      <div class="biometric-info">
+        <div class="biometric-icon">
+          <svg class="fingerprint" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Curved fingerprint lines -->
+            <path d="M 30 20 Q 50 15 70 20" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 25 30 Q 50 25 75 30" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 20 40 Q 50 35 80 40" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 25 50 Q 50 45 75 50" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 30 60 Q 50 55 70 60" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 35 70 Q 50 65 65 70" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <!-- Center point -->
+            <circle cx="50" cy="50" r="3" fill="white"/>
+          </svg>
+          <span class="scan-lines"></span>
+        </div>
+        <p class="info-text">
+          Utilize o seu leitor biométrico para fazer login de forma segura
+        </p>
+        <p class="info-detail">
+          <span class="dot"></span> Impressão digital
+          <span class="dot"></span> Reconhecimento facial
+          <span class="dot"></span> PIN do dispositivo
+        </p>
+      </div>
+
+      <!-- Mensagem do WebAuthn (aparece durante o processo) -->
+      <div *ngIf="carregando && mensagem.includes('Aguardando')" class="webauthn-message">
+        <p>
+          <i>🔐</i>
+          {{ mensagem }}
+          <i class="pulse-dots">...</i>
+        </p>
+      </div>
+
+      <!-- Botão principal de login -->
+      <div class="action-group">
+        <button 
+          (click)="iniciarLoginBiometria()" 
+          class="btn-primary"
+          [disabled]="carregando"
+        >
+          <span *ngIf="!carregando">
+            <i class="btn-icon">🔑</i>
+            Iniciar Login Biométrico
+          </span>
+          <span *ngIf="carregando" class="loading">
+            <i class="spinner"></i>
+            A aguardar autenticação...
+          </span>
+        </button>
+      </div>
+
+      <!-- Divisor -->
+      <div class="divider">
+        <span>ou</span>
+      </div>
+
+      <!-- Botão secundário para cadastro -->
+      <div class="secondary-action">
+        <p class="register-text">Ainda não tem conta?</p>
+        <button (click)="paraCadastro()" class="btn-secondary">
+          <i class="btn-icon"></i>
+          Criar nova conta
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading overlay (aparece durante o processo) -->
+    <div *ngIf="carregando" class="loading-overlay">
+      <div class="biometric-animation">
+        <div class="fingerprint-animation">
+          <svg class="fingerprint-large" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Curved fingerprint lines -->
+            <path d="M 30 20 Q 50 15 70 20" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 25 30 Q 50 25 75 30" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 20 40 Q 50 35 80 40" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 25 50 Q 50 45 75 50" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 30 60 Q 50 55 70 60" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 35 70 Q 50 65 65 70" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            <!-- Center point -->
+            <circle cx="50" cy="50" r="3" fill="white"/>
+          </svg>
+          <div class="ripple"></div>
+          <div class="ripple ripple-2"></div>
+        </div>
+      </div>
+      <p>A aguardar autenticação biométrica...</p>
+      <p class="instruction">Por favor, utilize o seu sensor biométrico</p>
+      <button class="btn-cancel" (click)="cancelarAutenticacao()">Cancelar</button>
+    </div>
+  </div>
+</div>

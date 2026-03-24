@@ -1,0 +1,163 @@
+
+
+
+
+
+.card {
+  background: #1e293b;
+  width: 650px;
+  height: 340px;
+  border-radius: 12px;
+  padding: 20px 24px 30px;
+  color: #fff;
+  overflow: hidden;
+  
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.card-header .span-h3 {
+  width: 4px;
+  height: 18px;
+  background: #facc15;
+  margin-right: 10px;
+  border-radius: 2px;
+}
+
+.card-header a {
+  color: #3b83f6;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.div-provin {
+  display: flex;
+  height: 260px;
+}
+
+.porcento {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #94a3b8;
+  padding-right: 10px;
+}
+
+/*quadrados pqs*/
+.grid {
+  position: relative;
+  flex: 1;
+  background-color: #1e293b;
+
+  background-image:
+  repeating-linear-gradient( to right, #94a3b8 0, #94a3b8 1px, transparent 1px, transparent 20px),
+  repeating-linear-gradient( to bottom, #94a3b8 0, #94a3b8 1px, transparent 1px, transparent 20px);
+
+  border-left: 1px solid #94a3b8;
+  border-bottom: 1px solid #94a3b8;
+}
+
+/*.grid {
+  position: relative;
+  flex: 1;
+  border-left: 1px solid rgba(2555, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(2555, 255, 255, 0.1);
+
+
+}
+
+.h-linhas {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient( to border-bottom, rgba(2555, 255, 0, 0.8) 0, rgba(2555, 255, 0, 0.8) 1px, transparent 1px, transparent 52px);
+}
+
+.v-linhas {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient( to border-bottom, rgba(2555, 255, 0, 0.5) 0, rgba(2555, 255, 0, 0.5) 1px, transparent 1px, transparent 120px);
+}*/
+
+.provinc {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 60px;
+  margin-top: 10px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90vw;
+    height: auto;
+    margin-left: 0;
+    margin: 0 auto;
+    padding: 15px;
+  }
+  
+  .div-provin {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .card-header h3 {
+    font-size: 14px;
+  }
+}
+
+
+
+
+
+/* ─── TOOLTIP DARK — corrige o fundo branco do ApexCharts ─── */
+.provincia ::ng-deep .apexcharts-tooltip{
+  background: #1e293b !important;
+  border: 1px solid rgba(59,130,246,0.25) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+}
+
+.provincia ::ng-deep .apexcharts-tooltip-title{
+  background: #0f172a !important;
+  border-bottom: 1px solid rgba(59,130,246,0.2) !important;
+  color: #94a3b8 !important;
+  font-size: 12px !important;
+}
+
+.provincia ::ng-deep .apexcharts-tooltip-text,
+.provincia ::ng-deep .apexcharts-tooltip-series-group{
+  color: #e2e8f0 !important;
+}
+
+/* Menu de contexto (três traços) */
+.provincia ::ng-deep .apexcharts-menu{
+  background: #1e293b !important;
+  border: 1px solid rgba(59,130,246,0.2) !important;
+  border-radius: 8px !important;
+}
+
+.provincia ::ng-deep .apexcharts-menu-item:hover {
+  background: rgba(59,130,246,0.12) !important;
+  color: #f1f5f9 !important;
+}
+
+.provincia ::ng-deep .apexcharts-menu-item{
+  color: #94a3b8 !important;
+}
+
+.graficoProv{
+  overflow: hidden;
+}

@@ -1,0 +1,85 @@
+:host {
+  --sidebar-w: 230px;
+  display: block;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  padding: 20px 24px;
+  margin-left: var(--sidebar-w);
+  box-sizing: border-box;
+}
+
+.card {
+  background: #091424;
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
+
+.card::after {
+  content: "";
+  position: absolute;
+  right: -20px; top: -20px;
+  width: 110px; height: 110px;
+  background: rgba(255,255,255,0.025);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+i {
+  color: rgba(93,145,223,0.2);
+  font-size: 44px;
+  position: absolute;
+  right: 18px; top: 18px;
+  pointer-events: none;
+}
+
+.top { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+
+.title { font-size: 13px; color: rgba(255,255,255,0.5); flex: 1; }
+
+.badge { font-size: 12px; padding: 3px 9px; border-radius: 7px; font-weight: 600; white-space: nowrap; }
+
+.up   { background: rgba(52,211,153,0.1); border: 1px solid #34d399; color: #34d399; }
+.down { background: rgba(250,204,21,0.1); color: orange; border: 1px solid orange; }
+
+.value { font-size: 34px; font-weight: 700; line-height: 1.1; color: #fff; }
+.value .sub { font-size: 16px; color: rgba(255,255,255,0.4); font-weight: 400; }
+
+.sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+.progress { margin-top: 16px; height: 5px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
+
+.bar { height: 100%; border-radius: 10px; transition: width 0.6s ease; }
+.blue { background: linear-gradient(90deg,#2563eb,#3b82f6); }
+.pink { background: linear-gradient(90deg,#db2777,#ec4899); }
+.cyan { background: linear-gradient(90deg,#06b6d4,#22d3ee); }
+
+@media (max-width: 900px) {
+  .dashboard { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .dashboard { 
+    margin-left: 0; 
+    padding: 12px; 
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard { grid-template-columns: 1fr; }
+}
