@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnInit, Inject, PLATFORM_ID, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { isPlatformBrowser, NgFor, NgIf, DecimalPipe } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 
 // COMPONENTE SPLASH SCREEN - DECLARADO PRIMEIRO
@@ -8,7 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-splash-screen',
   standalone: true,
-  imports: [NgIf, DecimalPipe],
+  imports: [NgIf, DecimalPipe, RouterLink, RouterLinkActive],
   template: `
     <div class="splash-container" [class.fade-out]="saindo">
 
