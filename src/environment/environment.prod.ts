@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://angovota.onrender.com'
+  apiUrl: 'https://angovotaadministradorbackend.onrender.com/'
 };
