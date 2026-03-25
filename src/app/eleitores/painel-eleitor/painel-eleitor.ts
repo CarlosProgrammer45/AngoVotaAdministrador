@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Header } from "../../dashboard/header/header";
 import { ServicesBuscar } from '../../Comunicacao-com-backend/services-buscar';
-import { environment } from '../../environment/environment';
+import { environment } from '../../../environment/environment';
 
 
 
