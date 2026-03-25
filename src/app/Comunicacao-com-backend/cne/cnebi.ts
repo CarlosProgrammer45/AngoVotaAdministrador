@@ -28,7 +28,6 @@ export class Cnebi implements AfterViewInit, OnDestroy {
   constructor(private serviceEnviar: ServiceEnviar, private rota: Router) {}
 
   async ngAfterViewInit() {
-    // Abrir câmera uma vez
     this.stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: { ideal: 'environment' } }
     });
@@ -42,7 +41,6 @@ export class Cnebi implements AfterViewInit, OnDestroy {
     if (!ctx) return;
 
     if (this.step === 'front') {
-      // Captura frente como imagem
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       ctx.drawImage(video, 0, 0);
@@ -51,8 +49,6 @@ export class Cnebi implements AfterViewInit, OnDestroy {
       this.serviceEnviar.DadosEnviados(this.frontImage);
 
       this.step = 'back';
-
-      // Inicia loop automático para ler QR no verso
       this.loopAtivo = true;
       this.tentarLerQR();
     }
@@ -66,7 +62,6 @@ export class Cnebi implements AfterViewInit, OnDestroy {
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) return;
 
-    // desenhar frame atual no canvas
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0);
@@ -75,8 +70,6 @@ export class Cnebi implements AfterViewInit, OnDestroy {
     const code = jsQR(imageData.data, canvas.width, canvas.height);
 
     if (code) {
-      console.log("Código lido:", code.data);
-
       this.backImage = canvas.toDataURL('image/png');
 
       const linhas = code.data.split(/\r?\n/);
@@ -95,16 +88,11 @@ export class Cnebi implements AfterViewInit, OnDestroy {
       };
 
       this.numeroBI = this.dadosQR.numeroBI;
-      console.log("Número BI extraído:", this.numeroBI);
-      console.log("Dados completos extraídos:", this.dadosQR);
-
       this.serviceEnviar.DadosEnviados(this.dadosQR);
-      //this.rota.navigate(['/reconhecimento']);
 
       this.loopAtivo = false;
       this.stopCamera();
     } else {
-      console.log("Nenhum código encontrado ainda...");
       setTimeout(() => this.tentarLerQR(), 1000);
     }
   }
