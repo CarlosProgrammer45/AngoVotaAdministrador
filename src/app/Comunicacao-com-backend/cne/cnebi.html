@@ -30,26 +30,9 @@
       <p>{{ statusMsg }}</p>
     </div>
 
-    <div *ngIf="dadosQR && dadosQR.nome">
-      <h3>Dados completos do QR:</h3>
-      <ul>
-        <li><strong>Nome:</strong> {{ dadosQR.nome }}</li>
-        <li><strong>Sobrenome:</strong> {{ dadosQR.sobrenome }}</li>
-        <li><strong>Número BI:</strong> {{ dadosQR.numeroBI }}</li>
-        <li><strong>Local Nascimento:</strong> {{ dadosQR.localNascimento }}</li>
-        <li><strong>Data Nascimento:</strong> {{ dadosQR.dataNascimento }}</li>
-        <li><strong>Sexo:</strong> {{ dadosQR.sexo }}</li>
-        <li><strong>Estado Civil:</strong> {{ dadosQR.estadoCivil }}</li>
-        <li><strong>Data Emissão:</strong> {{ dadosQR.dataEmissao }}</li>
-        <li><strong>Data Validade:</strong> {{ dadosQR.dataValidade }}</li>
-        <li><strong>Local Emissão:</strong> {{ dadosQR.localEmissao }}</li>
-        <li><strong>Versão:</strong> {{ dadosQR.versao }}</li>
-      </ul>
-    </div>
-
-    <div *ngIf="dadosQR && dadosQR.numeroBI">
+    <div *ngIf="frontImage && backImage">
       <button (click)="confirmarEnvio()">Confirmar e Enviar Documentos</button>
-      <button>Cancelar e voltar ao início</button>
+      <button (click)="rota.navigate(['/'])">Cancelar e voltar ao início</button>
     </div>
   </main>
 
