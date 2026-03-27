@@ -62,7 +62,7 @@ export class Cnebi implements AfterViewInit, OnDestroy {
     }
   }
 
-  // 🔹 Função de verificação documental
+  // 🔹 Função de verificação documental com limiares ajustados
   private verificarDocumento(imageData: ImageData, width: number, height: number): boolean {
     // 1. Contraste
     let min = 255, max = 0;
@@ -72,20 +72,20 @@ export class Cnebi implements AfterViewInit, OnDestroy {
       if (brilho > max) max = brilho;
     }
     const contraste = max - min;
-    const contrasteOk = contraste > 40;
+    const contrasteOk = contraste > 20; // antes era 40
 
     // 2. Proporção
     const proporcao = width / height;
-    const proporcaoOk = proporcao > 1.5 && proporcao < 1.7;
+    const proporcaoOk = proporcao > 1.3 && proporcao < 1.8; // intervalo mais largo
 
     // 3. Bordas
     let bordas = 0;
     for (let i = 0; i < imageData.data.length - 4; i += 4) {
       const brilho1 = (imageData.data[i] + imageData.data[i+1] + imageData.data[i+2]) / 3;
       const brilho2 = (imageData.data[i+4] + imageData.data[i+5] + imageData.data[i+6]) / 3;
-      if (Math.abs(brilho1 - brilho2) > 50) bordas++;
+      if (Math.abs(brilho1 - brilho2) > 40) bordas++; // antes era 50
     }
-    const bordasOk = bordas > (width * height * 0.01);
+    const bordasOk = bordas > (width * height * 0.005); // antes era 0.01
 
     return contrasteOk && proporcaoOk && bordasOk;
   }
@@ -99,8 +99,7 @@ export class Cnebi implements AfterViewInit, OnDestroy {
   }
 
   confirmarEnvio() {
-    // Agora enviamos objeto com frente e verso
-   // this.serviceEnviar.DadosEnviados({ frente: this.frontImage, verso: this.backImage });
-   // this.rota.navigate(['/reconhecimento']);
+    this.serviceEnviar.DadosEnviados({ frente: this.frontImage, verso: this.backImage });
+    this.rota.navigate(['/reconhecimento']);
   }
 }
