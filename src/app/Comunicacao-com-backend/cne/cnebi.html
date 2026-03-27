@@ -25,10 +25,9 @@
       <img [src]="backImage" />
     </div>
 
-    <!-- 🔹 BLOCO NOVO: mostrar dados extraídos -->
-    <div *ngIf="numeroBI">
-      <h3>Número BI extraído:</h3>
-      <p>{{ numeroBI }}</p>
+    <div *ngIf="statusMsg">
+      <h3>Status:</h3>
+      <p>{{ statusMsg }}</p>
     </div>
 
     <div *ngIf="dadosQR && dadosQR.nome">
@@ -46,6 +45,11 @@
         <li><strong>Local Emissão:</strong> {{ dadosQR.localEmissao }}</li>
         <li><strong>Versão:</strong> {{ dadosQR.versao }}</li>
       </ul>
+    </div>
+
+    <div *ngIf="dadosQR && dadosQR.numeroBI">
+      <button (click)="confirmarEnvio()">Confirmar e Enviar Documentos</button>
+      <button (click)="rota.navigate(['/'])">Cancelar e voltar ao início</button>
     </div>
   </main>
 
