@@ -7,9 +7,10 @@ type Step = 'front' | 'back';
 
 @Component({
   selector: 'app-cnebi',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './cnebi.html',
-  styleUrl: './cnebi.css',
+  styleUrls: ['./cnebi.css']
 })
 export class Cnebi implements AfterViewInit, OnDestroy {
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
@@ -98,7 +99,8 @@ export class Cnebi implements AfterViewInit, OnDestroy {
   }
 
   confirmarEnvio() {
-    this.serviceEnviar.DadosEnviados({ frente: this.frontImage, verso: this.backImage });
-    this.rota.navigate(['/reconhecimento']);
+    // Agora enviamos objeto com frente e verso
+   // this.serviceEnviar.DadosEnviados({ frente: this.frontImage, verso: this.backImage });
+   // this.rota.navigate(['/reconhecimento']);
   }
 }
