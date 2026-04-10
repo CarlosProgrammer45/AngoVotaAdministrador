@@ -106,7 +106,7 @@ export class Cnebi implements AfterViewInit, OnDestroy{
         this.serviceEnviar.DadosEnviados(this.frontImage);
       }
 
-      this.rota.navigate(['/reconhecimento']);
+      //this.rota.navigate(['/reconhecimento']);
       this.stopCamera();
     }
   }
