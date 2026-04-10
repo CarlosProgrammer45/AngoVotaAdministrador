@@ -6,9 +6,6 @@ import { ServicesBuscar } from '../services-buscar';
 
 type Step = 'front' | 'back';
 
-interface FileUploadResponse {
-  motivo: string;
-}
 
 @Component({
   selector: 'app-cnebi',
@@ -63,7 +60,7 @@ export class Cnebi implements AfterViewInit, OnDestroy{
 
             alert('O documento não é um BI angolano ou não é original. Por favor, tente novamente com um documento válido. Motivo: ' 
               + res.motivo);
-              console.log('Motivo da rejeição:', res.motivo);
+              console.log('Motivo da rejeição:' + res.motivo);
               return;
             
            }
