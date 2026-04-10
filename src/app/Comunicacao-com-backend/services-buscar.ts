@@ -140,4 +140,28 @@ export class ServicesBuscar {
   Votar(candidato_id: number): Observable<any> {
     return this.http.post(`${this.api}/votar`, { candidato_id }, { withCredentials: true });
   }
+
+
+   EnviarFile(ficheiro: File, face: 'frente' | 'verso') {
+
+    const formData = new FormData();
+
+    formData.append('imagem', ficheiro);
+    formData.append('face', face);
+    formData.append('utilizadorId', this.ObterIdDoUtilizador());
+    return this.http.post(`${this.api}/analisar/imagem`, formData);
+  }
+
+  private ObterIdDoUtilizador(): string{
+
+    let id = sessionStorage.getItem('utilizadorId');
+
+    if(!id){
+
+      id = Date.now().toString(); // Gera um ID temporário
+      sessionStorage.setItem('utilizadorId', id);
+    }
+    return id
+  }
+
 }
