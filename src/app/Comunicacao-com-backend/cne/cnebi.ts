@@ -55,7 +55,7 @@ export class Cnebi implements AfterViewInit, OnDestroy{
       const ficheiro = new File([blob!], 'bi-frente.jpg', { type: 'image/jpeg' });
       this.serviceBuscar.EnviarFile(ficheiro, 'frente').subscribe({
         next: (res: any) => {     
-          alert('Imagem enviada com sucesso!', res.motivo); 
+          alert('Imagem enviada com sucesso!' + res.motivo); 
 
            console.log('Resposta do backend:', res);
 
@@ -84,7 +84,7 @@ export class Cnebi implements AfterViewInit, OnDestroy{
         const ficheiro = new File([blob!], 'bi-verso.jpg', { type: 'image/jpeg' });
         this.serviceBuscar.EnviarFile(ficheiro, 'verso').subscribe({
           next: (res: any) => {
-            alert('Imagem enviada com sucesso!', res.motivo);
+            alert('Imagem enviada com sucesso!' + res.motivo);
             console.log('Resposta do backend:', res);
 
             if (!res.e_bi_Angolano || !res.e_original) {
