@@ -1,42 +1,180 @@
 <div class="arroz">
-  <header class="Bara">
-    <h2>Portal do Cidadão</h2>
-    <h6>Serviços Digitais Identidade</h6>
-  </header>
 
-  <main>
-    <h2>Captura de Bilhete de Identidade</h2>
-    <p>Utilize a sua webcam para capturar imagens nítidas da frente e do verso do seu documento oficial.</p>
 
-    <video #video autoplay playsinline></video>
-    <button (click)="capture()">
-      {{ step === 'front' ? 'Capturar Frente' : 'Capturar Verso' }}
-    </button>
 
-    <canvas #canvas hidden></canvas>
+<header class="Bara">
 
-    <div *ngIf="frontImage">
-      <h3>Frente capturada:</h3>
-      <img [src]="frontImage" />
-    </div>
-
-    <div *ngIf="backImage">
-      <h3>Verso capturado:</h3>
-      <img [src]="backImage" />
-    </div>
-
-    <div *ngIf="statusMsg">
-      <h3>Status:</h3>
-      <p>{{ statusMsg }}</p>
-    </div>
-
-    <div *ngIf="frontImage && backImage">
-      <button (click)="confirmarEnvio()">Confirmar e Enviar Documentos</button>
-      <button>Cancelar e voltar ao início</button>
-    </div>
-  </main>
-
-  <footer>
-    © 2027 Portal do Cidadão - Governo Digital - Todos os direitos reservados
-  </footer>
+<div class="">
+<h2 class="">Portal do Cidadão</h2>
+<h6 class="s">Serviços Digitais Identidade</h6>
 </div>
+
+</header>
+
+
+
+
+<main class="">
+
+
+
+<div class="">
+<div>
+    <div class="m">
+<div class="">
+    Processo de Identificação
+</div>
+</div>
+<h2 class="">Captura de Bilhete de Identidade</h2>
+
+<p class="">Utilize a sua webcam para capturar imagens nítidas da frente e do verso do seu documento oficial.</p>
+</div>
+<div class="">
+<div class="">
+
+</div>
+<div class=""></div>
+<div class="">
+
+</div>
+</div>
+</div>
+
+
+
+<div class="">
+<div class="">
+
+
+
+<div class="">
+<div class="">
+
+
+
+<div>
+  <video #video autoplay playsinline></video>
+  <button (click)="capture()">
+    {{ step === 'front' ? 'Capturar Frente' : 'Capturar Verso' }}
+  </button>
+
+  <canvas #canvas hidden></canvas>
+
+  <div *ngIf="frontImage">
+    <h3>Frente capturada:</h3>
+    <img [src]="frontImage" />
+  </div>
+
+  <div *ngIf="backImage">
+    <h3>Verso capturado:</h3>
+    <img [src]="backImage" />
+  </div>
+</div>
+
+
+
+<div class="">
+
+
+
+<div class=""></div>
+<div class=""></div>
+<div class=""></div>
+<div class=""></div>
+
+
+
+<div class="">
+
+
+</div>
+</div>
+
+
+
+
+</div>
+<div class="">
+<p class="is">"Posicione a <span class="text-primary font-bold">frente</span> do seu BI no quadro"</p>
+</div>
+</div>
+
+
+
+<div class="">
+
+<p class="">
+    --------------------------------------------------------------------------------------------------------
+</p>
+<p class="">
+    Certifique-se de que há iluminação suficiente e que todos os dados do documento estão legíveis na imagem.
+</p>
+<p class="">
+    --------------------------------------------------------------------------------------------------------
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div class="">
+
+
+
+
+
+
+
+
+<div class=""></div>
+</div>
+
+
+
+<div class="">
+<button class="" abled="">
+
+    Confirmar e Enviar Documentos
+</button>
+<button class="">
+    Cancelar e voltar ao início
+</button>
+</div>
+
+
+
+<div class="">
+<div class="">
+<div class="">
+
+</div>
+<div>
+<h4 class="">Boa Iluminação</h4>
+<p class="">Evite reflexos diretos no plástico do seu BI.</p>
+</div>
+</div>
+<div class="">
+<div class="">
+
+</div>
+<div>
+<h4 class="">Foco Automático</h4>
+<p class="">O sistema detecta e foca automaticamente no documento.</p>
+</div>
+</div>
+<div class="">
+<div class="">
+
+</div>
+<div>
+<h4 class="">Conexão Segura</h4>
+<p class="">Os seus dados são encriptados de ponta-a-ponta.</p>
+</div>
+</div>
+</div>
+</main>
+<footer class="">
+        © 2027 Portal do Cidadão - Governo Digital - Todos os direitos reservados
+    </footer>
+  </div>
