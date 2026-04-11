@@ -67,7 +67,7 @@ export class Cnebi implements AfterViewInit, OnDestroy{
         },
         error: (err: any) => {
           console.error('Erro ao enviar imagem:', err);
-          alert('Ocorreu um erro ao enviar a imagem. Por favor, tente novamente.');
+          alert('Ocorreu um erro ao enviar a imagem. Por favor, tente novamente. '+ err.error.error);
         }
       });
     }, 'image/jpeg');
@@ -94,7 +94,7 @@ export class Cnebi implements AfterViewInit, OnDestroy{
           },
           error: (err: any) => {
             console.error('Erro ao enviar imagem:', err);
-            alert('Ocorreu um erro ao enviar a imagem. Por favor, tente novamente.'+ err.error.error);
+            alert('Ocorreu um erro ao enviar a imagem. Por favor, tente novamente. '+ err.error.error);
           }
         });
       }, 'image/jpeg');
