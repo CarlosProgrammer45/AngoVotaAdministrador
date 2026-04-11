@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { WebcamImage, WebcamModule } from 'ngx-webcam';
 import { Subject } from 'rxjs';
 import * as faceapi from 'face-api.js';
+import Tesseract from 'tesseract.js';
+import { data, math } from '@tensorflow/tfjs';
 import { ServiceEnviar } from '../../Comunicacao-com-backend/service-enviar';
 import { Router } from '@angular/router';
 import { ServicesBuscar } from '../../Comunicacao-com-backend/services-buscar';
@@ -14,6 +16,19 @@ import { ServicesBuscar } from '../../Comunicacao-com-backend/services-buscar';
   styleUrl: './reconhecer.css'
 })
 export class Reconhecer implements OnInit {
+
+  frenteDocumentos() {
+    throw new Error('Method not implemented.');
+  }
+  carregarArquivo() {
+    throw new Error('Method not implemented.');
+  }
+  onCaptureFrente($event: WebcamImage) {
+    throw new Error('Method not implemented.');
+  }
+  SerfieBI($event: WebcamImage) {
+    throw new Error('Method not implemented.');
+  }
 
   liberarVoto() {}
 
@@ -44,9 +59,6 @@ export class Reconhecer implements OnInit {
     facingMode: 'user'
   };
 
-  // Opções do detector leve para mobile
-  private detectorOpts = new faceapi.TinyFaceDetectorOptions({ inputSize: 160 });
-
   constructor(
     private dadosService: ServiceEnviar,
     private rota: Router,
@@ -59,36 +71,14 @@ export class Reconhecer implements OnInit {
   }
 
   async ngOnInit() {
-    // Deixa o TensorFlow escolher o melhor backend automaticamente
+    await faceapi.tf.setBackend('cpu');
     await faceapi.tf.ready();
 
     const MODEL_URL = 'https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js/weights';
-
-    // Carrega só os 3 modelos necessários em paralelo — remove o ssdMobilenetv1
-    await Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-      faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-      faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
-    ]);
-
-    console.log('Modelos carregados!');
-  }
-
-  // Reduz imagem para processar mais rápido
-  private reduzirImagem(src: string): Promise<HTMLImageElement> {
-    return new Promise(resolve => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 320;
-        canvas.height = 240;
-        canvas.getContext('2d')?.drawImage(img, 0, 0, 320, 240);
-        const pequena = new Image();
-        pequena.onload = () => resolve(pequena);
-        pequena.src = canvas.toDataURL('image/jpeg', 0.7);
-      };
-      img.src = src;
-    });
+    await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+    await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
+    await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+    await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
   }
 
   tirarSelfie() {
@@ -97,25 +87,29 @@ export class Reconhecer implements OnInit {
 
   async minhaSelfie(imagem: WebcamImage) {
     if (!this.fotoBI) {
-      alert('Não tem nenhuma foto para comparar');
+      alert('Não tem nehuma foto para comparar');
       return;
     }
 
     this.selfieImage = imagem;
 
-    // Reduz as duas imagens antes de processar
-    const biImg = await this.reduzirImagem(this.fotoBI!);
-    const selfieImg = await this.reduzirImagem(this.selfieImage.imageAsDataUrl);
+    const biImg = new Image();
+    biImg.src = this.fotoBI!;
+    const selfieImg = new Image();
+    selfieImg.src = this.selfieImage.imageAsDataUrl;
+
+    await biImg.decode();
+    await selfieImg.decode();
 
     console.log('Imagens carregadas, a comparar rostos...');
 
     const descricaoBI = await faceapi
-      .detectSingleFace(biImg, this.detectorOpts)
+      .detectSingleFace(biImg)
       .withFaceLandmarks()
       .withFaceDescriptor();
 
     const descricaoSelfie = await faceapi
-      .detectSingleFace(selfieImg, this.detectorOpts)
+      .detectSingleFace(selfieImg)
       .withFaceLandmarks()
       .withFaceDescriptor();
 
@@ -126,11 +120,13 @@ export class Reconhecer implements OnInit {
       );
 
       if (distancia < 0.6) {
+        alert('Reconhecimento facial aprovado! Distância: ' + distancia.toFixed(4));
         this.aprovado = true;
         this.resultado = 'Reconhecimento facial aprovado! Distância: ' + distancia.toFixed(4);
         this.aparecer = true;
         this.fotoAcomparar = descricaoSelfie.descriptor;
       } else {
+        alert('Reconhecimento facial reprovado! Distância: ' + distancia.toFixed(4));
         this.resultado = 'Reconhecimento facial reprovado! Distância: ' + distancia.toFixed(4);
         this.rota.navigate(['/Cnebi']);
       }
@@ -139,21 +135,33 @@ export class Reconhecer implements OnInit {
     }
   }
 
+  async LeitorOCR() {
+    if (!this.fotoBI) {
+      console.log('Não deu para fazer o OCR');
+      return;
+    }
+    console.log('OCR iniciado...');
+
+    const { data: { text } } = await Tesseract.recognize(this.fotoBI, 'por', {
+      logger: (m: any) => console.log(m)
+    });
+
+    this.resultadoOCR = text;
+    console.log('Resultado Gerado', text);
+  }
+
   IniciarLiveness() {
     this.livenessPassed = false;
     this.cheksrealizados.clear();
-    this.instrucoesAtual = 'Pisca os olhos (fechar e abrir)';
+    this.instrucoesAtual = 'Pisca os olhos(fechar e abrir)';
     this.iconeAtual = 'visibility';
     this.livenessStatus = 'A verificar...';
 
     if (this.intervalLiveness) clearInterval(this.intervalLiveness);
-
-    // 800ms em vez de 500ms — menos processamento
     this.intervalLiveness = setInterval(() => {
       this.triggerLiveness.next();
-    }, 800);
+    }, 500);
 
-    // Timeout de 2 minutos
     setTimeout(() => {
       if (!this.livenessPassed) {
         clearInterval(this.intervalLiveness);
@@ -179,11 +187,12 @@ export class Reconhecer implements OnInit {
     if (this.livenessPassed) return;
     if (!this.fotoAcomparar) return;
 
-    // Reduz a imagem antes de processar
-    const imgReduzida = await this.reduzirImagem(imagem.imageAsDataUrl);
+    const img = new Image();
+    img.src = imagem.imageAsDataUrl;
+    await img.decode();
 
     const deteccao = await faceapi
-      .detectSingleFace(imgReduzida, this.detectorOpts)
+      .detectSingleFace(img, new faceapi.SsdMobilenetv1Options())
       .withFaceLandmarks()
       .withFaceDescriptor();
 
@@ -202,7 +211,6 @@ export class Reconhecer implements OnInit {
 
       const pontos = deteccao.landmarks;
 
-      // Passo 1 — Piscar olhos
       if (!this.cheksrealizados.has('piscar')) {
         const olhoEsquerdo = Math.abs(
           pontos.getLeftEye()[1].y - pontos.getLeftEye()[4].y
@@ -223,7 +231,6 @@ export class Reconhecer implements OnInit {
         return;
       }
 
-      // Passo 2 — Virar para a esquerda
       if (
         !this.cheksrealizados.has('esquerda') &&
         this.cheksrealizados.has('piscar')
@@ -241,7 +248,6 @@ export class Reconhecer implements OnInit {
         return;
       }
 
-      // Passo 3 — Virar para a direita
       if (
         !this.cheksrealizados.has('direita') &&
         this.cheksrealizados.has('esquerda')
@@ -251,7 +257,7 @@ export class Reconhecer implements OnInit {
 
         if (narizDireita - narizX > 30) {
           this.cheksrealizados.add('direita');
-          this.instrucoesAtual = 'Parabéns, passaste pelo liveness!';
+          this.instrucoesAtual = 'Parabéns, passaste pelo liveness';
           this.livenessStatus += ' | Direita detectada! ✓';
           this.iconeAtual = 'check_circle';
           this.livenessPassed = true;
@@ -264,9 +270,8 @@ export class Reconhecer implements OnInit {
           });
         }
       }
-
     } else {
-      console.log('Nenhum rosto detectado!');
+      console.log('Nenhu rosto detectado!');
       this.kyc = false;
     }
   }
