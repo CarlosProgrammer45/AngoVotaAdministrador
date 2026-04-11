@@ -125,8 +125,10 @@ tirarSelfie() {
     await selfieImg.decode();
   
     console.log('Imagens carregadas, a comparar rostos...');
-    const descricaoBI =  await faceapi.detectSingleFace(biImg).withFaceLandmarks().withFaceDescriptor()
-    const descricaoSelfie = await faceapi.detectSingleFace(selfieImg).withFaceLandmarks().withFaceDescriptor()
+    const descricaoBI = await faceapi.detectSingleFace(biImg, new faceapi.TinyFaceDetectorOptions())
+      .withFaceLandmarks().withFaceDescriptor()
+    const descricaoSelfie = await faceapi.detectSingleFace(selfieImg, new faceapi.TinyFaceDetectorOptions())
+      .withFaceLandmarks().withFaceDescriptor()
     if (descricaoBI && descricaoSelfie) {
       const distancia = faceapi.euclideanDistance(descricaoBI.descriptor, descricaoSelfie.descriptor)
   
@@ -217,7 +219,7 @@ async framesCapturada(imagem: WebcamImage) {
   img.src = imagem.imageAsDataUrl;
   await img.decode();
 
-  const deteccao = await faceapi.detectSingleFace(img, new faceapi.SsdMobilenetv1Options())
+  const deteccao = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
   .withFaceLandmarks().withFaceDescriptor();
 
 
