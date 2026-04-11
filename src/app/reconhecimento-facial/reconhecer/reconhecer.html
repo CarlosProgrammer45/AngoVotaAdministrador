@@ -98,7 +98,8 @@
       <div class="webcam-liveness-container">
         <webcam [trigger]="triggerObservable"
          (imageCapture)="minhaSelfie($event)"
-          class="webcam-liveness">~
+          class="webcam-liveness"
+          [videoOptions]="videoOptions">
         </webcam>
       </div>
 
