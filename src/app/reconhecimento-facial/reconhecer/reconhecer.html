@@ -149,7 +149,8 @@
     [trigger]="triggerLivenessObservable" 
     (imageCapture)="framesCapturada($event)"
     [mirrorImage]="'auto'"
-    class="webcam-liveness">
+    class="webcam-liveness"
+    [videoOptions]="videoOptions">
     </webcam>
 
     <!-- GUIA VISUAL DO ROSTO -->
