@@ -67,6 +67,10 @@ resultadoOCR: string = "";
 
 kyc: boolean = false;
 
+videoOptions: MediaTrackConstraints = {
+    facingMode: { 'user' }
+  }
+
 
 constructor(private dadosService: ServiceEnviar, private rota: Router, private buscar: ServicesBuscar) {
   this.dadosService.documento$.subscribe(img => {
