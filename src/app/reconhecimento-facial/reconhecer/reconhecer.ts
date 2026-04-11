@@ -68,7 +68,7 @@ resultadoOCR: string = "";
 kyc: boolean = false;
 
 videoOptions: MediaTrackConstraints = {
-    facingMode: { 'user' }
+    facingMode: 'user' 
   }
 
 
