@@ -84,7 +84,7 @@ constructor(private dadosService: ServiceEnviar, private rota: Router, private b
   async ngOnInit() {
 
   // Configurações para o FaceAPI
-  await faceapi.tf.setBackend('cpu'); //Configuração para sistemas lentos
+  //await faceapi.tf.setBackend('cpu'); //Configuração para sistemas lentos
   await faceapi.tf.ready();
  
   const MODEL_URL = 'https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js/weights'; //Busca o faceAPI pela cdn
