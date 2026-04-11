@@ -1,180 +1,162 @@
-<div class="arroz">
+<div class="pagina">
 
+  <header class="cabecalho">
+    <div class="cabecalho-inner">
+      <div class="logo-area">
+        <div class="logo-icone"></div>
+        <div>
+          <h2>Portal do Cidadão</h2>
+          <span>Serviços Digitais de Identidade</span>
+        </div>
+      </div>
+      <div class="badge-seguro">
+        <div class="dot-verde"></div>
+        Ligação Segura
+      </div>
+    </div>
+  </header>
 
+  <main class="conteudo">
 
-<header class="Bara">
+    <div class="titulo-area">
+      <div class="passo-badge">Processo de Identificação</div>
+      <h1>Captura do Bilhete de Identidade</h1>
+      <p>Utilize a câmera para capturar imagens nítidas da frente e do verso do seu BI.</p>
+    </div>
 
-<div class="">
-<h2 class="">Portal do Cidadão</h2>
-<h6 class="s">Serviços Digitais Identidade</h6>
+    <!-- Indicador de passos -->
+    <div class="passos">
+      <div class="passo" [class.ativo]="step === 'front'" [class.concluido]="frenteAprovada">
+        <div class="passo-num">{{ frenteAprovada ? '✓' : '1' }}</div>
+        <span>Frente do BI</span>
+      </div>
+      <div class="passo-linha" [class.ativo]="frenteAprovada"></div>
+      <div class="passo" [class.ativo]="step === 'back'" [class.concluido]="backStatus === 'success'">
+        <div class="passo-num">{{ backStatus === 'success' ? '✓' : '2' }}</div>
+        <span>Verso do BI</span>
+      </div>
+    </div>
+
+    <div class="grid-principal">
+
+      <!-- Câmera -->
+      <div class="card-camera">
+        <div class="camera-titulo">
+          <div class="camera-dot"></div>
+          {{ step === 'front' ? 'A capturar frente do BI' : 'A capturar verso do BI' }}
+        </div>
+        <div class="camera-wrap">
+          <video #video autoplay playsinline></video>
+          <div class="camera-overlay">
+            <div class="guia-doc"></div>
+          </div>
+        </div>
+        <canvas #canvas hidden></canvas>
+
+        <div class="instrucao">
+          <span *ngIf="step === 'front'">Posicione a <strong>frente</strong> do BI dentro do quadro</span>
+          <span *ngIf="step === 'back'">Posicione o <strong>verso</strong> do BI dentro do quadro</span>
+        </div>
+
+        <button
+          class="btn-capturar"
+          (click)="capture()"
+          [disabled]="frontStatus === 'loading' || backStatus === 'loading'">
+          <span *ngIf="frontStatus !== 'loading' && backStatus !== 'loading'">
+            {{ step === 'front' ? 'Capturar Frente' : 'Capturar Verso' }}
+          </span>
+          <span *ngIf="frontStatus === 'loading' || backStatus === 'loading'" class="spinner"></span>
+        </button>
+      </div>
+
+      <!-- Painel de resultados -->
+      <div class="painel-resultados">
+
+        <!-- Frente -->
+        <div class="card-resultado" [class.sucesso]="frontStatus === 'success'" [class.erro]="frontStatus === 'error'">
+          <div class="resultado-header">
+            <span class="resultado-label">Frente do BI</span>
+            <div class="resultado-badge" *ngIf="frontStatus !== 'idle'">
+              <span *ngIf="frontStatus === 'loading'" class="badge-loading">A verificar...</span>
+              <span *ngIf="frontStatus === 'success'" class="badge-ok">Aprovado</span>
+              <span *ngIf="frontStatus === 'error'" class="badge-erro">Rejeitado</span>
+            </div>
+          </div>
+
+          <div class="imagem-area" *ngIf="frontImage; else semImagem">
+            <img [src]="frontImage" alt="Frente do BI" />
+          </div>
+          <ng-template #semImagem>
+            <div class="imagem-placeholder">Aguarda captura</div>
+          </ng-template>
+
+          <div class="mensagem sucesso-msg" *ngIf="frontStatus === 'success'">{{ frontMensagem }}</div>
+          <div class="mensagem erro-msg" *ngIf="frontStatus === 'error'">{{ frontMensagem }}</div>
+          <div class="mensagem loading-msg" *ngIf="frontStatus === 'loading'">{{ frontMensagem }}</div>
+
+          <button class="btn-recapturar" *ngIf="frontStatus === 'error'" (click)="recapturar('front')">
+            Tentar novamente
+          </button>
+        </div>
+
+        <!-- Verso -->
+        <div class="card-resultado" [class.sucesso]="backStatus === 'success'" [class.erro]="backStatus === 'error'" [class.bloqueado]="!frenteAprovada">
+          <div class="resultado-header">
+            <span class="resultado-label">Verso do BI</span>
+            <div class="resultado-badge" *ngIf="backStatus !== 'idle'">
+              <span *ngIf="backStatus === 'loading'" class="badge-loading">A verificar...</span>
+              <span *ngIf="backStatus === 'success'" class="badge-ok">Aprovado</span>
+              <span *ngIf="backStatus === 'error'" class="badge-erro">Rejeitado</span>
+            </div>
+          </div>
+
+          <div class="imagem-area" *ngIf="backImage; else semImagemVerso">
+            <img [src]="backImage" alt="Verso do BI" />
+          </div>
+          <ng-template #semImagemVerso>
+            <div class="imagem-placeholder">
+              {{ frenteAprovada ? 'Aguarda captura' : 'Complete a frente primeiro' }}
+            </div>
+          </ng-template>
+
+          <div class="mensagem sucesso-msg" *ngIf="backStatus === 'success'">{{ backMensagem }}</div>
+          <div class="mensagem erro-msg" *ngIf="backStatus === 'error'">{{ backMensagem }}</div>
+          <div class="mensagem loading-msg" *ngIf="backStatus === 'loading'">{{ backMensagem }}</div>
+
+          <button class="btn-recapturar" *ngIf="backStatus === 'error'" (click)="recapturar('back')">
+            Tentar novamente
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Dicas -->
+    <div class="dicas">
+      <div class="dica">
+        <div class="dica-icone iluminacao"></div>
+        <div>
+          <h4>Boa Iluminação</h4>
+          <p>Evite reflexos diretos no plástico do BI.</p>
+        </div>
+      </div>
+      <div class="dica">
+        <div class="dica-icone foco"></div>
+        <div>
+          <h4>Foco Automático</h4>
+          <p>O sistema foca automaticamente no documento.</p>
+        </div>
+      </div>
+      <div class="dica">
+        <div class="dica-icone seguro"></div>
+        <div>
+          <h4>Conexão Segura</h4>
+          <p>Os seus dados são encriptados de ponta-a-ponta.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>© 2027 Portal do Cidadão · Governo Digital · Todos os direitos reservados</footer>
 </div>
-
-</header>
-
-
-
-
-<main class="">
-
-
-
-<div class="">
-<div>
-    <div class="m">
-<div class="">
-    Processo de Identificação
-</div>
-</div>
-<h2 class="">Captura de Bilhete de Identidade</h2>
-
-<p class="">Utilize a sua webcam para capturar imagens nítidas da frente e do verso do seu documento oficial.</p>
-</div>
-<div class="">
-<div class="">
-
-</div>
-<div class=""></div>
-<div class="">
-
-</div>
-</div>
-</div>
-
-
-
-<div class="">
-<div class="">
-
-
-
-<div class="">
-<div class="">
-
-
-
-<div>
-  <video #video autoplay playsinline></video>
-  <button (click)="capture()">
-    {{ step === 'front' ? 'Capturar Frente' : 'Capturar Verso' }}
-  </button>
-
-  <canvas #canvas hidden></canvas>
-
-  <div *ngIf="frontImage">
-    <h3>Frente capturada:</h3>
-    <img [src]="frontImage" />
-  </div>
-
-  <div *ngIf="backImage">
-    <h3>Verso capturado:</h3>
-    <img [src]="backImage" />
-  </div>
-</div>
-
-
-
-<div class="">
-
-
-
-<div class=""></div>
-<div class=""></div>
-<div class=""></div>
-<div class=""></div>
-
-
-
-<div class="">
-
-
-</div>
-</div>
-
-
-
-
-</div>
-<div class="">
-<p class="is">"Posicione a <span class="text-primary font-bold">frente</span> do seu BI no quadro"</p>
-</div>
-</div>
-
-
-
-<div class="">
-
-<p class="">
-    --------------------------------------------------------------------------------------------------------
-</p>
-<p class="">
-    Certifique-se de que há iluminação suficiente e que todos os dados do documento estão legíveis na imagem.
-</p>
-<p class="">
-    --------------------------------------------------------------------------------------------------------
-</p>
-</div>
-</div>
-</div>
-
-
-
-<div class="">
-
-
-
-
-
-
-
-
-<div class=""></div>
-</div>
-
-
-
-<div class="">
-<button class="" abled="">
-
-    Confirmar e Enviar Documentos
-</button>
-<button class="">
-    Cancelar e voltar ao início
-</button>
-</div>
-
-
-
-<div class="">
-<div class="">
-<div class="">
-
-</div>
-<div>
-<h4 class="">Boa Iluminação</h4>
-<p class="">Evite reflexos diretos no plástico do seu BI.</p>
-</div>
-</div>
-<div class="">
-<div class="">
-
-</div>
-<div>
-<h4 class="">Foco Automático</h4>
-<p class="">O sistema detecta e foca automaticamente no documento.</p>
-</div>
-</div>
-<div class="">
-<div class="">
-
-</div>
-<div>
-<h4 class="">Conexão Segura</h4>
-<p class="">Os seus dados são encriptados de ponta-a-ponta.</p>
-</div>
-</div>
-</div>
-</main>
-<footer class="">
-        © 2027 Portal do Cidadão - Governo Digital - Todos os direitos reservados
-    </footer>
-  </div>
