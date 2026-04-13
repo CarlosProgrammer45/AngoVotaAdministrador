@@ -131,6 +131,7 @@ export class Reconhecer implements OnInit {
         this.rota.navigate(['/Cnebi']);
       }
     } else {
+      alert('Não foi possível detectar rosto em uma das imagens.');
       this.resultado = 'Não foi possível detectar rosto em uma das imagens.';
     }
   }
