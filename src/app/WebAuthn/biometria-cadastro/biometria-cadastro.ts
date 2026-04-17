@@ -33,6 +33,11 @@ export class BiometriaCadastro {
     return buffer;
   }
 
+  private bufferToBase64url(buffer: ArrayBuffer): string {
+    return btoa(String.fromCharCode(...new Uint8Array(buffer)))
+      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
   async enviar() {
     try {
       this.mensagem = "A iniciar a biometria...";
@@ -43,31 +48,27 @@ export class BiometriaCadastro {
       optins.challenge = this.bufferFromBase64URL(optins.challenge);
       optins.user.id = this.bufferFromBase64URL(optins.user.id);
 
-      const credencial: any = await navigator.credentials.create({
-        publicKey: optins
-      });
+      const cred: any = await navigator.credentials.create({ publicKey: optins });
+
+      // Converter para objeto serializável
+      const credencial = {
+        id: cred.id,
+        rawId: this.bufferToBase64url(cred.rawId),
+        type: cred.type,
+        response: {
+          clientDataJSON: this.bufferToBase64url(cred.response.clientDataJSON),
+          attestationObject: this.bufferToBase64url(cred.response.attestationObject),
+        }
+      };
 
       await this.biometriaService.enviarCredencial(credencial);
 
       this.mensagem = "✅ Biometria realizada com sucesso!";
-      
-      // Pequeno delay para mostrar a mensagem de sucesso antes do navigate
-      setTimeout(() => {
-        this.rota.navigate(['/dashboard']);
-      }, 1500);
+      setTimeout(() => this.rota.navigate(['/dashboard']), 1500);
 
     } catch (err: any) {
       console.error(err);
-      this.mensagem = err.error.error || 'Erro no cadastro Biométrico';
-
-      // Tratamento de erros específicos
-      if (err.message?.includes('cancelled') || err.name === 'NotAllowedError') {
-        this.mensagem = "❌ Operação cancelada pelo usuário";
-      } else if (err.error?.code === "NumeroObrigatorio") {
-        this.mensagem = "❌ Número do BI é obrigatório";
-      } else {
-        this.mensagem = `❌ Falha na Biometria: ${err.error.error || 'Erro desconhecido'}`;
-      }
+      this.mensagem = err.error?.error || 'Erro no cadastro Biométrico';
     } finally {
       this.carregando = false;
     }
