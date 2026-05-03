@@ -326,10 +326,183 @@ footer {
   .painel-resultados { flex-direction: row; }
   .card-resultado { flex: 1; }
 }
-@media (max-width: 600px) {
-  .conteudo { padding: 1.5rem 1rem; }
-  .titulo-area h1 { font-size: 1.4rem; }
-  .painel-resultados { flex-direction: column; }
-  .cabecalho { padding: 0.8rem 1rem; }
-  .badge-seguro { display: none; }
+
+/* Mobile (até 768px) */
+@media (max-width: 768px) {
+  header.Bara {
+    padding: 1rem 1rem;
+  }
+
+  header h2 {
+    font-size: 1.1rem;
+  }
+
+  header h6 {
+    font-size: 0.85rem;
+  }
+
+  main {
+    padding: 1.5rem 1rem;
+    max-width: 100%;
+  }
+
+  main h2 {
+    font-size: 1.4rem;
+  }
+
+  main p {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  main > div:nth-child(2) {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  main > div:nth-child(2) > div {
+    gap: 1rem;
+  }
+
+  video {
+    height: 280px;
+  }
+
+  img {
+    max-height: 350px;
+  }
+
+  main button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+    margin: 4px;
+  }
+
+  .glow-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  main > div:last-child {
+    grid-template-columns: 1fr;
+    margin-top: 1.5rem;
+  }
+
+  main h3 {
+    font-size: 1rem;
+  }
+
+  main > div:nth-child(2) > div > div:last-child > div {
+    padding: 0.8rem;
+  }
+
+  .m {
+    width: 70%;
+  }
+}
+
+/* Mobile Pequeno (até 480px) */
+@media (max-width: 480px) {
+  header.Bara {
+    padding: 0.8rem 0.8rem;
+  }
+
+  header h2 {
+    font-size: 0.95rem;
+  }
+
+  header h6 {
+    font-size: 0.75rem;
+  }
+
+  main {
+    padding: 1rem 0.8rem;
+    max-width: 100%;
+  }
+
+  main h2 {
+    font-size: 1.2rem;
+  }
+
+  main p {
+    font-size: 0.8rem;
+    max-width: 100%;
+    margin-top: 0.3rem;
+  }
+
+  main > div:nth-child(2) {
+    padding: 0.8rem;
+    border-radius: 12px;
+  }
+
+  main > div:nth-child(2) > div {
+    gap: 0.8rem;
+  }
+
+  video {
+    height: 220px;
+    border-radius: 8px;
+  }
+
+  img {
+    max-height: 300px;
+    border-radius: 8px;
+  }
+
+  main button {
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
+    margin: 3px;
+    margin-right: 0;
+  }
+
+  .glow-button {
+    width: 50px;
+    height: 50px;
+  }
+
+  main h3 {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+  }
+
+  main > div:first-child {
+    margin-bottom: 1.5rem;
+  }
+
+  main > div:first-child > div:last-child {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  main > div:first-child > div:last-child > div {
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+  }
+
+  main > div:nth-child(2) > div > div:last-child > div {
+    padding: 0.6rem;
+    border-radius: 12px;
+  }
+
+  main > div:last-child {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  main > div:last-child > div {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  footer {
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 0.75rem;
+  }
+
+  .m {
+    width: 80%;
+  }
 }

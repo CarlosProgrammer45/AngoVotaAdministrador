@@ -9,9 +9,6 @@ import { Router } from '@angular/router';
 import { ServicesBuscar } from '../../Comunicacao-com-backend/services-buscar';
 
 
-
-
-
 @Component({
   selector: 'app-reconhecer',
   imports: [CommonModule, WebcamModule],
@@ -19,23 +16,6 @@ import { ServicesBuscar } from '../../Comunicacao-com-backend/services-buscar';
   styleUrl: './reconhecer.css'
 })
 export class Reconhecer implements OnInit {
-
-
-frenteDocumentos() {
-throw new Error('Method not implemented.');
-}
-carregarArquivo() {
-throw new Error('Method not implemented.');
-}
-onCaptureFrente($event: WebcamImage) {
-throw new Error('Method not implemented.');
-}
-SerfieBI($event: WebcamImage) {
-throw new Error('Method not implemented.');
-}
-
-
-
 
 liberarVoto() {
 
@@ -58,7 +38,6 @@ selfieImage: WebcamImage | null = null;
 fotoBI: string | null = null;
 fotoAcomparar: Float32Array<ArrayBufferLike> | null = null;
 
-
 trigger = new Subject<void>();
 triggerObservable = this.trigger.asObservable();
 
@@ -70,6 +49,21 @@ videoOptions: MediaTrackConstraints = {
 
 kyc: boolean = false;
 
+// --- ADICIONADO: Estado de processamento para o overlay de loading ---
+aProcessar: boolean = false;
+mensagemProcessamento: string = 'A processar...';
+
+livenessAtivo: boolean = false
+
+// --- ADICIONADO: Notificação visual em vez de alert() ---
+notificacao: { mensagem: string; tipo: 'sucesso' | 'erro' | 'info' } | null = null;
+private notificacaoTimeout: any = null;
+
+// --- ADICIONADO: Flag para evitar frames duplicados no liveness (throttle manual) ---
+private livenessEmProcessamento: boolean = false;
+
+// --- ADICIONADO: Flag para evitar que o botão da selfie seja clicado enquanto já está a processar ---
+private selfieEmProcessamento: boolean = false;
 
 constructor(private dadosService: ServiceEnviar, private rota: Router, private buscar: ServicesBuscar) {
   this.dadosService.documento$.subscribe(img => {
@@ -96,56 +90,73 @@ constructor(private dadosService: ServiceEnviar, private rota: Router, private b
 
 
 tirarSelfie() {
+  // --- ADICIONADO: Ignora cliques enquanto a selfie anterior ainda está a ser processada ---
+  if (this.selfieEmProcessamento) return;
   this.trigger.next();
-  //this.LeitorOCR();
   }
   
   
   async minhaSelfie(imagem: WebcamImage) {
   
     if (!this.fotoBI){
-      alert('Não tem nehuma foto para comparar')
+      // --- ADICIONADO: Substituído alert() por notificação visual ---
+      this.mostrarNotificacao('Não tem nenhuma foto para comparar', 'erro');
       return
     } 
 
-    
+    // --- ADICIONADO: Bloqueia novos disparos enquanto está a processar, liberta no final ---
+    this.selfieEmProcessamento = true;
+
+    // --- ADICIONADO: Ativa o overlay de processamento com mensagem ---
+    this.aProcessar = true;
+    this.mensagemProcessamento = 'A comparar rostos...';
   
     this.selfieImage = imagem;
   
     const biImg = new Image();
-    biImg.src = this.fotoBI!;  // a foto do BI
-   // await new Promise(resolve => biImg.onload = resolve)
+    biImg.src = this.fotoBI!;
     const selfieImg = new Image();
-    selfieImg.src = this.selfieImage.imageAsDataUrl;  // a 
-   // await new Promise(resolve => selfieImg.onload = resolve);
+    selfieImg.src = this.selfieImage.imageAsDataUrl;
   
     // Espera as imagens carregarem completamente
     await biImg.decode();
     await selfieImg.decode();
   
     console.log('Imagens carregadas, a comparar rostos...');
+
+    // --- ADICIONADO: Atualiza a mensagem do overlay durante a deteção ---
+    this.mensagemProcessamento = 'A detetar rosto...';
+
     const descricaoBI =  await faceapi.detectSingleFace(biImg).withFaceLandmarks().withFaceDescriptor()
     const descricaoSelfie = await faceapi.detectSingleFace(selfieImg).withFaceLandmarks().withFaceDescriptor()
+
+    // --- ADICIONADO: Desativa o overlay após a deteção ---
+    this.aProcessar = false;
+
     if (descricaoBI && descricaoSelfie) {
       const distancia = faceapi.euclideanDistance(descricaoBI.descriptor, descricaoSelfie.descriptor)
   
       if(distancia < 0.6){
-        alert("Reconhecimento facial aprovado! Distância: " + distancia.toFixed(4));
+        // --- ADICIONADO: Substituído alert() por notificação visual ---
+        this.mostrarNotificacao('Reconhecimento facial aprovado! Distância: ' + distancia.toFixed(4), 'sucesso');
         this.aprovado = true;
         this.resultado = "Reconhecimento facial aprovado! Distância: " + distancia.toFixed(4);
         this.aparecer = true;
         this.fotoAcomparar = descricaoSelfie.descriptor;
+        // --- ADICIONADO: Liberta o guard — aprovado, não precisa de repetir ---
+        this.selfieEmProcessamento = false;
         
-      
       }else{
-        alert("Reconhecimento facial reprovado! Distância: " + distancia.toFixed(4));
+        // --- ADICIONADO: Substituído alert() por notificação visual ---
+        this.mostrarNotificacao('Reconhecimento facial reprovado! Distância: ' + distancia.toFixed(4), 'erro');
        this.resultado = "Reconhecimento facial reprovado! Distância: " + distancia.toFixed(4);
+       // --- ADICIONADO: Liberta o guard antes de navegar ---
+       this.selfieEmProcessamento = false;
        this.rota.navigate(['/Cnebi']);
       }
       
       
     }else{
-      alert("Não foi possível detectar rosto em uma das imagens.")
       this.resultado = "Não foi possível detectar rosto em uma das imagens.";
     }
   }
@@ -167,9 +178,16 @@ tirarSelfie() {
   }
 
 
-
-
-
+// --- ADICIONADO: Método para mostrar notificação visual temporária (substitui alert()) ---
+mostrarNotificacao(mensagem: string, tipo: 'sucesso' | 'erro' | 'info') {
+  // Limpa o timeout anterior se houver uma notificação ativa
+  if (this.notificacaoTimeout) clearTimeout(this.notificacaoTimeout);
+  this.notificacao = { mensagem, tipo };
+  // Desaparece automaticamente após 4 segundos
+  this.notificacaoTimeout = setTimeout(() => {
+    this.notificacao = null;
+  }, 4000);
+}
 
 
 IniciarLiveness(){
@@ -180,16 +198,32 @@ IniciarLiveness(){
   this.iconeAtual = 'visibility';
   this.livenessStatus = 'A verificar...';
 
+  // --- ADICIONADO: Reset do flag de throttle ao reiniciar ---
+  this.livenessEmProcessamento = false;
+
+  // ADICIONADO: Reset do overlay caso tenha ficado ativo de uma tentativa anterior
+  this.aProcessar = false;
+
+  // ADICIONADO: Marca o liveness como ativo para desativar o botão Iniciar e ativar o Parar
+  this.livenessAtivo = true;
+
   if (this.intervalLiveness) clearInterval(this.intervalLiveness);
+
+  // --- ADICIONADO: Intervalo aumentado de 500ms para 700ms para evitar sobreposição de frames
+  //     no processamento da faceapi, que causava o botão precisar de ser clicado duas vezes ---
   this.intervalLiveness = setInterval(() => {
-    this.triggerLiveness.next();  // Dispara captura de frame
-  }, 500);
+    // --- ADICIONADO: Só dispara novo frame se o anterior já terminou (throttle) ---
+    if (!this.livenessEmProcessamento) {
+      this.triggerLiveness.next();
+    }
+  }, 700);
 
   // Para o loop quando acabar ou cancelar
   setTimeout(() => {
     if (!this.livenessPassed) {
       clearInterval(this.intervalLiveness);
       this.livenessStatus = 'Tempo esgotado. Tenta novamente.';
+      this.livenessAtivo = false;
     }
   }, 2 * 60 * 1000);  // 1 minuto máximo
 }
@@ -203,6 +237,12 @@ pararLiveness() {
     clearTimeout(this.timeoutLiveness);
     this.timeoutLiveness = null;
   }
+  // --- ADICIONADO: Reset do flag de throttle ao parar ---
+  this.livenessEmProcessamento = false;
+  // ADICIONADO: Garante que o overlay desaparece mesmo que o liveness seja parado a meio de um await
+  this.aProcessar = false;
+  // ADICIONADO: Marca o liveness como inativo para reativar o botão Iniciar
+  this.livenessAtivo = false;
   this.instrucoesAtual = 'Clica no botão para iniciar a prova de vida!';
   this.livenessStatus = 'Liveness parado.';
 }
@@ -213,10 +253,18 @@ async framesCapturada(imagem: WebcamImage) {
 
   if(!this.fotoAcomparar) return;
 
+  // --- ADICIONADO: Throttle — ignora o frame se ainda está a processar o anterior,
+  //     isto evita a fila de frames acumulados que causava lentidão e duplo clique ---
+  if (this.livenessEmProcessamento) return;
+  this.livenessEmProcessamento = true;
+
   const img = new Image();
   img.src = imagem.imageAsDataUrl;
   await img.decode();
 
+  // Mantido SsdMobilenetv1 — é o único que garante landmarks precisos o suficiente
+  // para detetar corretamente a posição nariz/maxilar usada nas verificações esquerda/direita.
+  // TinyFaceDetector é mais rápido mas causa falsos positivos nessas verificações.
   const deteccao = await faceapi.detectSingleFace(img, new faceapi.SsdMobilenetv1Options())
   .withFaceLandmarks().withFaceDescriptor();
 
@@ -229,12 +277,12 @@ async framesCapturada(imagem: WebcamImage) {
       console.log('Rosto não corresponde ao do BI. Distância:', distancia.toFixed(4));
       this.pararLiveness();
       this.livenessStatus = 'Rosto não corresponde ao do BI. Tenta novamente.';
+      // --- ADICIONADO: Notificação visual quando o rosto não corresponde ---
+      this.mostrarNotificacao('Rosto não corresponde ao do BI. Tenta novamente.', 'erro');
+      this.livenessEmProcessamento = false; // --- ADICIONADO: liberta o throttle ao sair ---
       return;
     }
     
-
-   
-
 
     const pontos = deteccao.landmarks
   
@@ -247,13 +295,25 @@ async framesCapturada(imagem: WebcamImage) {
     
     if(olhoEsquerdo < 12 && olhoDireito < 12){
       this.cheksrealizados.add('piscar');
-      this.instrucoesAtual = 'Agora vira a cabeça para a esquerda'
-      this.livenessStatus = 'Piscada detectada! ✓'
+      this.instrucoesAtual = 'Agora vira a cabeça para a esquerda';
+      this.livenessStatus = 'Piscada detectada! ✓';
       this.iconeAtual = 'arrow_back';
       this.kyc = false;
-    }
-    return;
 
+      // CORRIGIDO: Para a captura imediatamente após detetar a piscada,
+      // assim o utilizador não fica a piscar sem feedback enquanto o intervalo continua
+      clearInterval(this.intervalLiveness);
+      // Recomeça o intervalo após uma pequena pausa para dar tempo ao utilizador de ler a instrução
+      setTimeout(() => {
+        if (!this.livenessPassed) {
+          this.intervalLiveness = setInterval(() => {
+            if (!this.livenessEmProcessamento) this.triggerLiveness.next();
+          }, 700);
+        }
+      }, 1200);
+    }
+    this.livenessEmProcessamento = false;
+    return;
   }
 
 
@@ -266,22 +326,42 @@ async framesCapturada(imagem: WebcamImage) {
       this.livenessStatus += ' | Esquerda detectada! ✓';
       this.iconeAtual = 'arrow_forward';
       this.kyc = false;
+
+      // CORRIGIDO: Para a captura e espera 1.5s antes de recomeçar a verificar a direita.
+      // Sem esta pausa o utilizador ainda está virado para a esquerda quando o próximo
+      // frame é capturado, e como as coordenadas são simétricas isso pode validar a direita
+      // imediatamente sem o utilizador ter mexido — era esse o falso positivo reportado.
+      clearInterval(this.intervalLiveness);
+      setTimeout(() => {
+        if (!this.livenessPassed) {
+          this.intervalLiveness = setInterval(() => {
+            if (!this.livenessEmProcessamento) this.triggerLiveness.next();
+          }, 700);
+        }
+      }, 1500);
     }
-    return
+    this.livenessEmProcessamento = false;
+    return;
   }
 
   if(!this.cheksrealizados.has('direita') && this.cheksrealizados.has('esquerda')){
     const narizX = pontos.getNose()[0].x;
     const narizDireita = pontos.getJawOutline()[16].x;
-    if(narizDireita - narizX > 30){
+
+    // CORRIGIDO: Threshold aumentado de 30 para 40 na direita para exigir uma rotação
+    // mais clara e evitar que valores residuais da posição anterior (esquerda) disparem
+    // um falso positivo logo no primeiro frame após a pausa
+    if(narizDireita - narizX > 40){
 
       this.cheksrealizados.add('direita');
-      this.instrucoesAtual = 'Parabéns, passaste pelo liveness'
+      this.instrucoesAtual = 'Parabéns, passaste pelo liveness';
       this.livenessStatus += ' | Direita detectada! ✓';
       this.iconeAtual = 'check_circle';
       this.livenessPassed = true;
       clearInterval(this.intervalLiveness);
       this.kyc = true;
+      // --- ADICIONADO: Notificação de sucesso no liveness ---
+      this.mostrarNotificacao('Prova de vida concluída com sucesso!', 'sucesso');
       this.buscar.enviarKYC(this.kyc).subscribe( data=> {
         
          this.rota.navigate(['/cadastrowebauth']);
@@ -298,6 +378,8 @@ async framesCapturada(imagem: WebcamImage) {
 
 }
 
+  // --- ADICIONADO: liberta o throttle no final do processamento normal ---
+  this.livenessEmProcessamento = false;
 }
 
 /*

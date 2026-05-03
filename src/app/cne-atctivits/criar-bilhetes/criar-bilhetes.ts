@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServicesActivits } from '../services-activits';
 
 @Component({
@@ -9,38 +9,33 @@ import { ServicesActivits } from '../services-activits';
   templateUrl: './criar-bilhetes.html',
   styleUrl: './criar-bilhetes.css'
 })
-export class CriarBilhetes implements OnInit{
+export class CriarBilhetes implements OnInit {
 
   bilheteForm!: FormGroup;
+  enviando: boolean = false;
+  mensagem: string = '';
+  erroEnvio: boolean = false;
 
-
-  constructor(private fb: FormBuilder, private serviceCriarBilhete: ServicesActivits){}
-
+  constructor(
+    private fb: FormBuilder, 
+    private serviceCriarBilhete: ServicesActivits
+  ) {}
 
   ngOnInit(): void {
     this.bilheteForm = this.fb.group({
-
       numero_bi: ['', 
         [ 
           Validators.required,
           Validators.minLength(14),
           Validators.maxLength(14),
           Validators.pattern(/^[A-Za-z0-9]+$/)
-        
         ]
-      
       ],
-
-
       nome_completo: ['', [
-          
-          Validators.required, 
-          Validators.minLength(3), 
-          Validators.maxLength(100)
-        ]
-      
-      ], 
-
+        Validators.required, 
+        Validators.minLength(3), 
+        Validators.maxLength(100)
+      ]], 
       data_nascimento: ['', Validators.required], 
       genero: [''], 
       nacionalidade: ['Angolana'], 
@@ -48,52 +43,61 @@ export class CriarBilhetes implements OnInit{
     });
   }
 
+  onSubmit(): void {
+    this.bilheteForm.markAllAsTouched();
 
-  onSubmit(): void{
+    if (this.bilheteForm.invalid) {
+      this.mensagem = 'Por favor, preencha todos os campos obrigatórios correctamente.';
+      this.erroEnvio = true;
+      return;
+    }
 
-    if(this.bilheteForm.valid){
+    this.enviando = true;
+    this.mensagem = '';
+    this.erroEnvio = false;
 
-      this.serviceCriarBilhete
+    this.serviceCriarBilhete
       .criarNovoBilhete(this.bilheteForm.value)
       .subscribe({
-
-        next: (res)=>{
-
-          console.log('Bilhete Criado com sucesso');
+        next: (res) => {
+          console.log('Bilhete Criado com sucesso', res);
+          this.mensagem = 'Bilhete criado com sucesso!';
+          this.erroEnvio = false;
+          this.enviando = false;
+          this.resetForm();
         },
-
-        error: (error)=>{
+        error: (error) => {
           console.error('Erro ao criar bilhete', error);
+          this.mensagem = error?.error?.error ?? 'Erro ao criar o bilhete.';
+          this.erroEnvio = true;
+          this.enviando = false;
         }
-
-      })
-
-    }else{
-      console.warn('Formulário inválido');
-    }
-
+      });
   }
 
+  resetForm(): void {
+    this.bilheteForm.reset({
+      nacionalidade: 'Angolana',
+      genero: '',
+      local_emissao: ''
+    });
+    this.mensagem = '';
+    this.erroEnvio = false;
+  }
 
-  getClass(area: string): string{
-
+  getClass(area: string): string {
     const control = this.bilheteForm.get(area);
-
+    
     if (!control) return '';
-
-    if (this.bilheteForm.invalid && (this.bilheteForm.dirty || this.bilheteForm.touched)){
-
+    
+    if (control.invalid && (control.touched || control.dirty)) {
       return 'invalido';
     }
-
-    if (this.bilheteForm.valid && (this.bilheteForm.dirty || this.bilheteForm.touched)) {
-        return 'validado';
+    
+    if (control.valid && (control.touched || control.dirty)) {
+      return 'validado';
     }
-
+    
     return '';
-
   }
-
-
-
 }

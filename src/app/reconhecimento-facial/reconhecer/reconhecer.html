@@ -14,12 +14,6 @@
   </div>
 
 <div class="header-direita">
-  <!--  <span class="fundoConexao">
-      <span class="material-symbols-outlined">verified_user</span>
-      Conexão Segura
-   </span>
-   -->
-  
    <button class="icon-btn">
     <span class="material-symbols-outlined">help</span>
   </button>
@@ -93,6 +87,28 @@
 
  <div class="content-direira">
   <div class="fundo-webcam">
+
+    <!-- ADICIONADO: Overlay de processamento que aparece sobre a webcam durante a análise facial -->
+    @if (aProcessar) {
+      <div class="overlay-processamento">
+        <div class="overlay-spinner"></div>
+        <p class="overlay-mensagem">{{ mensagemProcessamento }}</p>
+      </div>
+    }
+
+    <!-- ADICIONADO: Toast de notificação visual — substitui os alert() do componente -->
+    @if (notificacao) {
+      <div class="toast-notificacao" [ngClass]="{
+        'toast-sucesso': notificacao.tipo === 'sucesso',
+        'toast-erro': notificacao.tipo === 'erro',
+        'toast-info': notificacao.tipo === 'info'
+      }">
+        <span class="material-symbols-outlined toast-icone">
+          {{ notificacao.tipo === 'sucesso' ? 'check_circle' : notificacao.tipo === 'erro' ? 'error' : 'info' }}
+        </span>
+        <p>{{ notificacao.mensagem }}</p>
+      </div>
+    }
 
     @if (!aparecer) {
       <div class="webcam-liveness-container">
@@ -208,6 +224,26 @@ class="arrow right"
              {{ livenessStatus }}
           </div>
       }
+
+      <!-- ADICIONADO: Badges de progresso do liveness — mostram visualmente cada passo concluído -->
+      <div class="liveness-passos">
+        <!-- Badge do passo "piscar" — fica verde quando completo -->
+        <div class="passo-badge" [ngClass]="{'passo-completo': cheksrealizados.has('piscar'), 'passo-ativo': !cheksrealizados.has('piscar') && intervalLiveness}">
+          <span class="material-symbols-outlined">visibility</span>
+          <span>Piscar</span>
+        </div>
+        <!-- Badge do passo "esquerda" — fica verde quando completo -->
+        <div class="passo-badge" [ngClass]="{'passo-completo': cheksrealizados.has('esquerda'), 'passo-ativo': cheksrealizados.has('piscar') && !cheksrealizados.has('esquerda')}">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Esquerda</span>
+        </div>
+        <!-- Badge do passo "direita" — fica verde quando completo -->
+        <div class="passo-badge" [ngClass]="{'passo-completo': cheksrealizados.has('direita'), 'passo-ativo': cheksrealizados.has('esquerda') && !cheksrealizados.has('direita')}">
+          <span class="material-symbols-outlined">arrow_forward</span>
+          <span>Direita</span>
+        </div>
+      </div>
+
       </div>
       
       <div class="ajudas">
@@ -224,8 +260,20 @@ class="arrow right"
   
   
       <div class="btns">
-        <button (click)="IniciarLiveness()"class="btn" >Iniciar</button>
-        <button (click)="pararLiveness()" class="btn">Parar</button>
+        <!-- ADICIONADO: Botão Iniciar desativado enquanto o liveness está a correr para evitar
+             cliques acidentais que causavam o bug de "colou" ao tentar reiniciar -->
+        <button (click)="IniciarLiveness()" class="btn"
+          [disabled]="livenessAtivo"
+          [ngClass]="{'btn-desativado': livenessAtivo}">
+          Iniciar
+        </button>
+        <!-- ADICIONADO: Botão Parar desativado quando o liveness não está ativo —
+             evita que o utilizador clique Parar antes de Iniciar ou depois de já ter parado -->
+        <button (click)="pararLiveness()" class="btn"
+          [disabled]="!livenessAtivo"
+          [ngClass]="{'btn-desativado': !livenessAtivo}">
+          Parar
+        </button>
       </div>
 
     </div>
@@ -240,10 +288,6 @@ class="arrow right"
 
 
 
-
-
-
-
   </div>
 
 
@@ -253,98 +297,9 @@ class="arrow right"
 
 
 
-</div>
 
 </div>
 
-
-
-
-
-
-
-
-
-
-
-<!--
-<h1>Fazendo liveness</h1>
-<div class="divisaoCentral">
-@if (!livenessPassed) {
-    <h3>Verificação de Vivacidade (Liveness)</h3>
-  <p>Por favor, siga as instruções abaixo para confirmar que és uma pessoa real:</p>
-
-  <div class="webcam"> 
-    <webcam
-    [trigger]="triggerLivenessObservable" 
-    (imageCapture)="framesCapturada($event)"
-    [width]="300"
-    [height]="300"
-    [mirrorImage]="'auto'">
-  </webcam>
-</div>
- 
-  <p>instruções: {{instrucoesAtual}}</p>
-  
-@if(livenessStatus){
-    <div [ngClass]="{'sucesso': livenessPassed, 'erro': !livenessPassed}">
-    {{ livenessStatus }}
-    </div>
-}
-  
-
-  <button (click)="IniciarLiveness()">Iniciar O liveness</button>
-
-}
--->
-<!--
-<header>
-    <div class="esquerda-header">
-      <h2>Verificação De identidade</h2>
-    </div>
-  
-    <div class="direita-header">
-      <button class="ajuda"></button>
-      <button class="configuracoes"></button>
-    </div>
-  </header>
-
-  <div class="principal">
-  
-  
-  <div class="container">
-      <div class="content">
-  
-    <h1>Capture a frente do seu Bilhete de identidade</h1>
-  
-    <p>Posiciona a parte frontal do seu documento</p>
-  
-      </div>
-  
-     <div class="container-fundo">
-        <div class="container-webcam">
-          <webcam 
-            [trigger]="triggerObservable"
-           (imageCapture)="SerfieBI($event)"
-            [mirrorImage]="'auto'"
-            class="webcam">
-            
-          </webcam>
-        </div>
-        
-  
-        
-  
-      </div>
-  
-      <button class="trocarCamera"></button>
-  
-      <button class="tirarFoto">Tirar foto</button>
-     
-  
-  
-  </div>
-  
 </div>
 
 

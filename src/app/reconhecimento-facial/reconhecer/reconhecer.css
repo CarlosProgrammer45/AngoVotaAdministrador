@@ -31,6 +31,18 @@
     50%     { transform: translateX(8px); }
 }
 
+/* ADICIONADO: Animação do spinner de processamento */
+@keyframes girar {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ADICIONADO: Animação de entrada do toast de notificação */
+@keyframes toastEntrar {
+    from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* ─── FACE GUIDE ─── */
 .face-outline { animation: scan 2s linear infinite; }
 
@@ -323,6 +335,139 @@
     object-position: center;
 }
 
+/* ADICIONADO: Overlay de processamento que cobre a webcam durante a análise facial.
+   Usa z-index alto para aparecer por cima de tudo dentro do fundo-webcam */
+.overlay-processamento {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: rgba(13, 27, 46, 0.82);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+}
+
+/* ADICIONADO: Spinner circular do overlay — usa a animação girar definida acima */
+.overlay-spinner {
+    width: 52px;
+    height: 52px;
+    border: 4px solid rgba(96, 165, 250, 0.2);
+    border-top-color: #60A5FA;
+    border-radius: 50%;
+    animation: girar 0.9s linear infinite;
+}
+
+/* ADICIONADO: Texto de estado dentro do overlay */
+.overlay-mensagem {
+    color: #ddeeff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-align: center;
+}
+
+/* ADICIONADO: Toast de notificação — aparece no topo do fundo-webcam e desaparece automaticamente.
+   Substitui os alert() do componente para que o utilizador veja a mensagem sem bloquear a UI */
+.toast-notificacao {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 240px;
+    max-width: 90%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    animation: toastEntrar 0.3s ease-out;
+    pointer-events: none; /* não bloqueia cliques abaixo */
+}
+
+/* ADICIONADO: Variante verde do toast para sucesso */
+.toast-sucesso {
+    background: rgba(22, 50, 36, 0.95);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #4ade80;
+}
+
+/* ADICIONADO: Variante vermelha do toast para erro */
+.toast-erro {
+    background: rgba(50, 20, 20, 0.95);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+
+/* ADICIONADO: Variante azul do toast para informação */
+.toast-info {
+    background: rgba(15, 30, 50, 0.95);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #60A5FA;
+}
+
+/* ADICIONADO: Ícone dentro do toast */
+.toast-icone {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+/* ADICIONADO: Contentor dos badges de progresso do liveness —
+   mostra os 3 passos (piscar, esquerda, direita) lado a lado */
+.liveness-passos {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 4px;
+    width: 100%;
+}
+
+/* ADICIONADO: Badge individual de cada passo do liveness —
+   estado neutro (ainda não chegou a este passo) */
+.passo-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(99,160,255,0.12);
+    color: #4a6a8a;
+    font-size: 0.72rem;
+    font-weight: 600;
+    transition: background 0.25s, border-color 0.25s, color 0.25s;
+    min-width: 64px;
+}
+
+.passo-badge span.material-symbols-outlined {
+    font-size: 1.1rem;
+}
+
+/* ADICIONADO: Badge no estado "ativo" — passo atual, pisca suavemente para chamar atenção */
+.passo-badge.passo-ativo {
+    background: rgba(59,130,246,0.14);
+    border-color: rgba(59,130,246,0.40);
+    color: #60A5FA;
+    animation: pulse 1.4s infinite;
+}
+
+/* ADICIONADO: Badge no estado "completo" — passo concluído, fica verde */
+.passo-badge.passo-completo {
+    background: rgba(34,197,94,0.12);
+    border-color: rgba(34,197,94,0.38);
+    color: #22c55e;
+    animation: none; /* para de piscar quando completo */
+}
+
 /* ─── OPERATIONS PANEL ─── */
 .Operacoes {
     display: flex;
@@ -487,6 +632,17 @@
     transform: translateY(-2px);
 }
 
+/* ADICIONADO: Estilo para botões desativados — reduz opacidade e remove cursor de clique,
+   aplicado tanto ao Iniciar (quando liveness está ativo) como ao Parar (quando está inativo) */
+.Operacoes .btns .btn.btn-desativado,
+.Operacoes .btns .btn[disabled] {
+    opacity: 0.38;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
     .content-direira .fundo-webcam {
@@ -582,6 +738,23 @@
         max-width: 160px;
         height: 40px;
         font-size: 13px;
+    }
+
+    /* ADICIONADO: Toast fica full-width em mobile para ser mais visível */
+    .toast-notificacao {
+        top: 10px;
+        min-width: unset;
+        width: calc(100% - 32px);
+        left: 16px;
+        transform: none;
+        font-size: 0.8rem;
+    }
+
+    /* ADICIONADO: Badges de passo ficam menores em mobile */
+    .passo-badge {
+        padding: 6px 8px;
+        min-width: 52px;
+        font-size: 0.68rem;
     }
 }
 

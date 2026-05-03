@@ -14,7 +14,7 @@ export class ServicesBuscar {
   private api = environment.apiUrl;
 
   constructor(private http: HttpClient) {
-    this.socket = io(environment.apiUrl, { withCredentials: true, transports: ['websocket', 'polling'] });
+    this.socket = io(environment.Socket, { withCredentials: true, transports: ['websocket', 'polling'] });
     this.socket.on('connect', () => console.log('deu para usar o Socket'));
     this.socket.on('connect_error', (err) => console.log('Não deu', err));
   }
@@ -118,7 +118,7 @@ export class ServicesBuscar {
 
   // GET /candidatos — Busca a lista de candidatos
   BuscarCandidatos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.api}/candidatos`, { withCredentials: true });
+    return this.http.get<any[]>(`${this.api}/candidato`, { withCredentials: true });
   }
 
   // POST /candidatos — Cria um candidato com foto e fundo (multipart/form-data)
@@ -127,10 +127,13 @@ export class ServicesBuscar {
     return this.http.post(`${this.api}/candidatos/criar`, formData, { withCredentials: true });
   }
 
-  // DELETE /candidatos/:id — Remove um candidato pelo ID
-  ApagarCandidato(id: number): Observable<any> {
-    return this.http.delete(`${this.api}/candidatos/apagar/${id}`, { withCredentials: true });
-  }
+  AtualizarCandidato(id: number, formData: FormData) {
+  return this.http.put(`${this.api}/candidatos/${id}`, formData);
+}
+
+ApagarCandidato(id: number) {
+  return this.http.delete(`${this.api}/candidatos/${id}`);
+}
 
   // ============================================================
   // HTTP — Votar
@@ -140,28 +143,4 @@ export class ServicesBuscar {
   Votar(candidato_id: number): Observable<any> {
     return this.http.post(`${this.api}/votar`, { candidato_id }, { withCredentials: true });
   }
-
-
-   EnviarFile(ficheiro: File, face: 'frente' | 'verso') {
-
-    const formData = new FormData();
-
-    formData.append('imagem', ficheiro);
-    formData.append('face', face);
-    formData.append('utilizadorId', this.ObterIdDoUtilizador());
-    return this.http.post(`${this.api}/analisar/imagem`, formData);
-  }
-
-  private ObterIdDoUtilizador(): string{
-
-    let id = sessionStorage.getItem('utilizadorId');
-
-    if(!id){
-
-      id = Date.now().toString(); // Gera um ID temporário
-      sessionStorage.setItem('utilizadorId', id);
-    }
-    return id
-  }
-
 }

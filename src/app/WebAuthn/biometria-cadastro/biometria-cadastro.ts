@@ -48,18 +48,9 @@ export class BiometriaCadastro {
       optins.challenge = this.bufferFromBase64URL(optins.challenge);
       optins.user.id = this.bufferFromBase64URL(optins.user.id);
 
-      const cred: any = await navigator.credentials.create({ publicKey: optins });
-
-      // Converter para objeto serializável
-      const credencial = {
-        id: cred.id,
-        rawId: this.bufferToBase64url(cred.rawId),
-        type: cred.type,
-        response: {
-          clientDataJSON: this.bufferToBase64url(cred.response.clientDataJSON),
-          attestationObject: this.bufferToBase64url(cred.response.attestationObject),
-        }
-      };
+      const credencial: any = await navigator.credentials.create({
+        publicKey: optins
+      });
 
       await this.biometriaService.enviarCredencial(credencial);
 

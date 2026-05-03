@@ -36,7 +36,7 @@ async iniciarLogin() {
         alert("Falha na verificação da credencial. Tente novamente.");
 
       }else{
-        alert("Erro na comunicação com o servidor. Tente novamente.");
+        alert("Erro na comunicação com o servidor. Tente novamente." + err.error.error);
       }
 
       return null;
