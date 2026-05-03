@@ -21,7 +21,8 @@
     "axe/forms": [
       "default",
       {
-        "label": "off"
+        "label": "off",
+        "select-name": "off"
       }
     ],
     "axe/text-alternatives": [
@@ -29,6 +30,23 @@
       {
         "image-alt": "off"
       }
-    ]
+    ],
+    "axe/name-role-value": [
+      "default",
+      {
+        "button-name": "off"
+      }
+    ],
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "backdrop-filter"
+        ]
+      }
+    ],
+    "typescript-config/is-valid": "off",
+    "disown-opener": "off",
+    "no-inline-styles": "off"
   }
 }

@@ -5,7 +5,6 @@
   "projects": {
     "Angular20": {
       "projectType": "application",
-      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -33,12 +32,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environment/environment.ts",
-                  "with": "src/environment/environment.prod.ts"
-                }
-              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -51,12 +44,10 @@
                   "maximumError": "30kB"
                 }
               ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
+              "outputHashing": "all",
+              "optimization": true,
+              "sourceMap": false,
+              "aot": true
             }
           },
           "defaultConfiguration": "production"
@@ -66,12 +57,9 @@
           "configurations": {
             "production": {
               "buildTarget": "Angular20:build:production"
-            },
-            "development": {
-              "buildTarget": "Angular20:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
