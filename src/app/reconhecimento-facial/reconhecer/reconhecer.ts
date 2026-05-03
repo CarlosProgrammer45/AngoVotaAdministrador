@@ -49,7 +49,7 @@ videoOptions: MediaTrackConstraints = {
 
 kyc: boolean = false;
 
-// --- ADICIONADO: Estado de processamento para o overlay de loading ---
+// Estado de processamento para o overlay de lo
 aProcessar: boolean = false;
 mensagemProcessamento: string = 'A processar...';
 
@@ -59,10 +59,10 @@ livenessAtivo: boolean = false
 notificacao: { mensagem: string; tipo: 'sucesso' | 'erro' | 'info' } | null = null;
 private notificacaoTimeout: any = null;
 
-// --- ADICIONADO: Flag para evitar frames duplicados no liveness (throttle manual) ---
+//  Flag para evitar frames duplicados no liveness (throttle manual) 
 private livenessEmProcessamento: boolean = false;
 
-// --- ADICIONADO: Flag para evitar que o botão da selfie seja clicado enquanto já está a processar ---
+//  Flag para evitar que o botão da selfie seja clicado enquanto já está a processar
 private selfieEmProcessamento: boolean = false;
 
 constructor(private dadosService: ServiceEnviar, private rota: Router, private buscar: ServicesBuscar) {
@@ -124,13 +124,13 @@ tirarSelfie() {
   
     console.log('Imagens carregadas, a comparar rostos...');
 
-    // --- ADICIONADO: Atualiza a mensagem do overlay durante a deteção ---
+    // Atualiza a mensagem do overlay durante a deteção
     this.mensagemProcessamento = 'A detetar rosto...';
 
     const descricaoBI =  await faceapi.detectSingleFace(biImg).withFaceLandmarks().withFaceDescriptor()
     const descricaoSelfie = await faceapi.detectSingleFace(selfieImg).withFaceLandmarks().withFaceDescriptor()
 
-    // --- ADICIONADO: Desativa o overlay após a deteção ---
+    // Desativa o overlay após a deteção 
     this.aProcessar = false;
 
     if (descricaoBI && descricaoSelfie) {
@@ -143,14 +143,14 @@ tirarSelfie() {
         this.resultado = "Reconhecimento facial aprovado! Distância: " + distancia.toFixed(4);
         this.aparecer = true;
         this.fotoAcomparar = descricaoSelfie.descriptor;
-        // --- ADICIONADO: Liberta o guard — aprovado, não precisa de repetir ---
+        // Liberta o guard — aprovado, não precisa de repetir ---
         this.selfieEmProcessamento = false;
         
       }else{
-        // --- ADICIONADO: Substituído alert() por notificação visual ---
+        //  notificação visual
         this.mostrarNotificacao('Reconhecimento facial reprovado! Distância: ' + distancia.toFixed(4), 'erro');
        this.resultado = "Reconhecimento facial reprovado! Distância: " + distancia.toFixed(4);
-       // --- ADICIONADO: Liberta o guard antes de navegar ---
+       // Liberta o guard antes de navegar ---
        this.selfieEmProcessamento = false;
        this.rota.navigate(['/Cnebi']);
       }
@@ -178,7 +178,7 @@ tirarSelfie() {
   }
 
 
-// --- ADICIONADO: Método para mostrar notificação visual temporária (substitui alert()) ---
+//Método para mostrar notificação visual temporária
 mostrarNotificacao(mensagem: string, tipo: 'sucesso' | 'erro' | 'info') {
   // Limpa o timeout anterior se houver uma notificação ativa
   if (this.notificacaoTimeout) clearTimeout(this.notificacaoTimeout);
@@ -198,10 +198,10 @@ IniciarLiveness(){
   this.iconeAtual = 'visibility';
   this.livenessStatus = 'A verificar...';
 
-  // --- ADICIONADO: Reset do flag de throttle ao reiniciar ---
+  // Reset do flag ao reiniciar ---
   this.livenessEmProcessamento = false;
 
-  // ADICIONADO: Reset do overlay caso tenha ficado ativo de uma tentativa anterior
+  // Reset do overlay caso tenha ficado ativo de uma tentativa anterior
   this.aProcessar = false;
 
   // ADICIONADO: Marca o liveness como ativo para desativar o botão Iniciar e ativar o Parar
@@ -209,10 +209,10 @@ IniciarLiveness(){
 
   if (this.intervalLiveness) clearInterval(this.intervalLiveness);
 
-  // --- ADICIONADO: Intervalo aumentado de 500ms para 700ms para evitar sobreposição de frames
+  // Intervalo aumentado de 500ms para 700ms para evitar sobreposição de frames
   //     no processamento da faceapi, que causava o botão precisar de ser clicado duas vezes ---
   this.intervalLiveness = setInterval(() => {
-    // --- ADICIONADO: Só dispara novo frame se o anterior já terminou (throttle) ---
+    // Só dispara novo frame se o anterior já terminou
     if (!this.livenessEmProcessamento) {
       this.triggerLiveness.next();
     }
@@ -237,11 +237,11 @@ pararLiveness() {
     clearTimeout(this.timeoutLiveness);
     this.timeoutLiveness = null;
   }
-  // --- ADICIONADO: Reset do flag de throttle ao parar ---
+  // Reset do flag ao parar ---
   this.livenessEmProcessamento = false;
-  // ADICIONADO: Garante que o overlay desaparece mesmo que o liveness seja parado a meio de um await
+  // Garante que o overlay desaparece mesmo que o liveness seja parado a meio de um await
   this.aProcessar = false;
-  // ADICIONADO: Marca o liveness como inativo para reativar o botão Iniciar
+  //  Marca o liveness como inativo para reativar o botão Iniciar
   this.livenessAtivo = false;
   this.instrucoesAtual = 'Clica no botão para iniciar a prova de vida!';
   this.livenessStatus = 'Liveness parado.';
@@ -253,8 +253,8 @@ async framesCapturada(imagem: WebcamImage) {
 
   if(!this.fotoAcomparar) return;
 
-  // --- ADICIONADO: Throttle — ignora o frame se ainda está a processar o anterior,
-  //     isto evita a fila de frames acumulados que causava lentidão e duplo clique ---
+  // Throttle — ignora o frame se ainda está a processar o anterior,
+  //     isto evita a fila de frames acumulados que causava lentidão e duplo clique
   if (this.livenessEmProcessamento) return;
   this.livenessEmProcessamento = true;
 
@@ -277,7 +277,7 @@ async framesCapturada(imagem: WebcamImage) {
       console.log('Rosto não corresponde ao do BI. Distância:', distancia.toFixed(4));
       this.pararLiveness();
       this.livenessStatus = 'Rosto não corresponde ao do BI. Tenta novamente.';
-      // --- ADICIONADO: Notificação visual quando o rosto não corresponde ---
+      //Notificação visual quando o rosto não corresponde ---
       this.mostrarNotificacao('Rosto não corresponde ao do BI. Tenta novamente.', 'erro');
       this.livenessEmProcessamento = false; // --- ADICIONADO: liberta o throttle ao sair ---
       return;
@@ -300,7 +300,7 @@ async framesCapturada(imagem: WebcamImage) {
       this.iconeAtual = 'arrow_back';
       this.kyc = false;
 
-      // CORRIGIDO: Para a captura imediatamente após detetar a piscada,
+      // Para a captura imediatamente após detetar a piscada,
       // assim o utilizador não fica a piscar sem feedback enquanto o intervalo continua
       clearInterval(this.intervalLiveness);
       // Recomeça o intervalo após uma pequena pausa para dar tempo ao utilizador de ler a instrução
@@ -327,7 +327,7 @@ async framesCapturada(imagem: WebcamImage) {
       this.iconeAtual = 'arrow_forward';
       this.kyc = false;
 
-      // CORRIGIDO: Para a captura e espera 1.5s antes de recomeçar a verificar a direita.
+      // Para a captura e espera 1.5s antes de recomeçar a verificar a direita.
       // Sem esta pausa o utilizador ainda está virado para a esquerda quando o próximo
       // frame é capturado, e como as coordenadas são simétricas isso pode validar a direita
       // imediatamente sem o utilizador ter mexido — era esse o falso positivo reportado.
@@ -348,7 +348,7 @@ async framesCapturada(imagem: WebcamImage) {
     const narizX = pontos.getNose()[0].x;
     const narizDireita = pontos.getJawOutline()[16].x;
 
-    // CORRIGIDO: Threshold aumentado de 30 para 40 na direita para exigir uma rotação
+    // Limite aumentado de 30 para 40 na direita para exigir uma rotação
     // mais clara e evitar que valores residuais da posição anterior (esquerda) disparem
     // um falso positivo logo no primeiro frame após a pausa
     if(narizDireita - narizX > 40){
@@ -378,7 +378,7 @@ async framesCapturada(imagem: WebcamImage) {
 
 }
 
-  // --- ADICIONADO: liberta o throttle no final do processamento normal ---
+  // liberta o aelerador no final do processamento normal 
   this.livenessEmProcessamento = false;
 }
 
